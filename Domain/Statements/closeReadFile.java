@@ -9,7 +9,9 @@ import Interfaces.StatementInterface;
 import Interfaces.Value;
 import java.io.BufferedReader;
 import java.io.IOException;
-
+/*
+class that implements the closing of a file in our toy language
+ */
 public class closeReadFile implements StatementInterface {
     private ExpressionInterface expression;
     public closeReadFile(ExpressionInterface expressionFromUser){
@@ -37,7 +39,7 @@ public class closeReadFile implements StatementInterface {
                 throw new MyException(id+" is not defined in the FileTable");
 
         }else
-            throw new MyException(expression+" does not evaluate as StringType");
+            throw new MyException(expression+" does not evaluate as a StringType");
         return state;
     }
 }
