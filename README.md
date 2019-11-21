@@ -40,8 +40,8 @@ Value ::= Number /*(ConstNumber)*/
  
 An expression (Expression) can be either a value (Value), or a variable name (Variable), or an arithmetic
 expression (ArithmeticExpression), a logical expression (LogicalExpression), or a relational expression(RelationExpression) as follows:
-Exp ::= Value /*Value*/
- | Id /*(Variable)*/
+Exp ::= Value /*ValueExpression*/
+ | Id /*(VariableExpression)*/
  | Exp1 + Exp2 /*(ArithmeticExpression)*/
  | Exp1 - Exp2
  | Exp1 * Exp2
@@ -82,10 +82,6 @@ int varc;
 readFile(varf,varc);print(varc);
 readFile(varf,varc);print(varc)
 closeRFile(varf)
--->and the "test.in" file contains the followings:
-15<NL>
-50<NL>
-<EOF>
 
 Example5:
 example 5
@@ -107,13 +103,11 @@ All these four main structures denote the program state (ProgramState). Our inte
 execute multiple programs but for each of them use a different ProgramState structures (that
 means different ExecutionStack, SymbolTable, Output and FileTable structures).
 
-At the beginning, ExecutionStack contains the original program, and SymbolTable ,Outout and FileTable are empty.
+At the beginning, ExecutionStack contains the original program, and SymbolTable ,Output and FileTable are empty.
 After the evaluation has started:
-->ExecutionStack contains the remaining part of the program that
-must be evaluated
-->SymbolTable contains the variables (from the variable declarations
-statements evaluated so far) with their assigned values
->Output contains the values printed so far
+->ExecutionStack contains the remaining part of the program that must be evaluated
+->SymbolTable contains the variables (from the variable declarations statements evaluated so far) with their assigned values
+->Output contains the values printed so far
 ->FileTable contains a dictionary mapping a StringValue (containing the filename (a string)) to the file descriptor from
 Java language. The file descriptor from Java language is an instance of the BufferedReader class.
 (We assume that a file can only be a text file that contains only non-zero positive integers, one
@@ -226,3 +220,5 @@ SymbolTable1
 Output1
 ==>
 end of the program execution
+
+The executions of openReadFile,closeReadFile and readFile are similar to the ones described above.
