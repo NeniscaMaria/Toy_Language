@@ -38,4 +38,13 @@ public class Heap implements HeapInterface<Integer,Value> {
         }else
             throw new MyException(addressFromUser+" is not a valid address in the heap");
     }
+    public boolean isAddress(Integer address){
+        return heap.containsKey(address);
+    }
+    public void update(Integer address, Value valueOfExpression){
+        if(isAddress(address))
+            heap.put(address,valueOfExpression);
+        else
+            throw new MyException("You tried to access a non-existing address!!");
+    }
 }
