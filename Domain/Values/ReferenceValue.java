@@ -22,4 +22,8 @@ public class ReferenceValue implements Value {
         return address;
     }
     public Type getType() { return new ReferenceType(locationType);}
+    @Override
+    public String toString(){
+        return "("+Integer.toString(address)+","+locationType.toString()+")";
+    }
 }

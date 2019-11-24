@@ -9,17 +9,19 @@ public class ProgramState {
     private MyListInterface<Value> output;
     private StatementInterface originalProgram;
     private MyDictionaryInterface<StringValue,BufferedReader> fileTable;
+    private HeapInterface heap;
     @Override
     public String toString(){
-        return executionStack.toString()+symbolTable.toString()+output.toString()+fileTable.toString();
+        return executionStack.toString()+symbolTable.toString()+output.toString()+fileTable.toString()+heap.toString();
     }
-    public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser){
+    public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser, HeapInterface heapFromUser){
         executionStack=executionStackFromUser;
         symbolTable=symbolTableFromUser;
         output=outputFromUser;
         originalProgram=programFromUser; //deepCopy(programFromUser)
         fileTable=fileTableFromUser;
         executionStack.push(programFromUser);
+        heap=heapFromUser;
     }
     public ProgramState(StatementInterface programFromUser){
         originalProgram=programFromUser;
@@ -28,6 +30,7 @@ public class ProgramState {
         output=new Output();
         fileTable=new FileTable();
         executionStack.push(originalProgram);
+        heap=new Heap();
     }
     public MyStackInterface<StatementInterface> getStack(){
         return executionStack;
