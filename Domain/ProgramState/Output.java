@@ -13,7 +13,7 @@ public class Output implements MyListInterface<Value> {
     }
     @Override
     public String toString(){
-        StringBuilder result= new StringBuilder("Output:\n");
+        StringBuilder result= new StringBuilder("Output:"+System.lineSeparator());
         for(Value val : list)
             result.append(val.toString()).append(System.lineSeparator());
         return result.toString();

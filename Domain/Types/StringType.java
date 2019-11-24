@@ -1,6 +1,5 @@
 package Domain.Types;
 
-import Domain.Values.IntValue;
 import Domain.Values.StringValue;
 import Interfaces.Type;
 import Interfaces.Value;

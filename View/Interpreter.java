@@ -16,6 +16,9 @@ import java.util.Scanner;
 class Interpreter {
 
     public static void main(String[] args) {
+        System.out.println("Input the log file for example1: ");
+        Scanner scanner=new Scanner(System.in);
+        String logfile1=scanner.nextLine();
         //example 1 int v; v=2;Print(v)
         StatementInterface printExample1 = new PrintStatement(new VariableExpression("v"));
         StatementInterface assignmentExample1 = new AssignmentStatement("v", new ValueExpression(new IntValue(2)));
@@ -23,9 +26,11 @@ class Interpreter {
         StatementInterface compoundExample1 = new CompoundStatement(printExample1, assignmentExample1);
         StatementInterface example1 = new CompoundStatement(declarationExample1, compoundExample1);
         ProgramState prg1 = new ProgramState(example1);
-        RepositoryInterface repo1 = new Repository(prg1, "log1.txt");
+        RepositoryInterface repo1 = new Repository(prg1, logfile1);
         Controller controller1 = new Controller(repo1, true);
 
+        System.out.println("Input the log file for example2: ");
+        String logfile2=scanner.nextLine();
         //example 2 s
         //int a;int b; a=2+3*5;b=a+1;Print(b)
         StatementInterface example2 = new CompoundStatement(new VariableDeclarationStatement("a", new IntType()),
@@ -36,9 +41,11 @@ class Interpreter {
                                 new CompoundStatement(new AssignmentStatement("b", new ArithmeticExpression("+", new VariableExpression("a"), new
                                         ValueExpression(new IntValue(1)))), new PrintStatement(new VariableExpression("b"))))));
         ProgramState program2 = new ProgramState(example2);
-        RepositoryInterface repo2 = new Repository(program2, "log2.txt");
+        RepositoryInterface repo2 = new Repository(program2, logfile2);
         Controller controller2 = new Controller(repo2, true);
 
+        System.out.println("Input the log file for example3: ");
+        String logfile3=scanner.nextLine();
         //example 3
         //bool a; int v; a=true;(If a Then v=2 Else v=3);Print(v)
         StatementInterface example3 = new CompoundStatement(new VariableDeclarationStatement("a", new BoolType()),
@@ -47,9 +54,11 @@ class Interpreter {
                                 new CompoundStatement(new IfStatement(new VariableExpression("a"), new AssignmentStatement("v", new ValueExpression(new IntValue(2))),
                                         new AssignmentStatement("v", new ValueExpression(new IntValue(3)))), new PrintStatement(new VariableExpression("v"))))));
         ProgramState program3 = new ProgramState(example3);
-        RepositoryInterface repo3 = new Repository(program3, "log3.txt");
+        RepositoryInterface repo3 = new Repository(program3, logfile3);
         Controller controller3 = new Controller(repo3, true);
 
+        System.out.println("Input the log file for example4: ");
+        String logfile4=scanner.nextLine();
         //example4
         //string varf;
         //varf="test.in";
@@ -68,10 +77,12 @@ class Interpreter {
                                                                 new CompoundStatement(new PrintStatement(new VariableExpression("varc")),
                                                                         new closeReadFile(new VariableExpression("varf"))))))))));
         ProgramState program4 = new ProgramState(example4);
-        RepositoryInterface repo4 = new Repository(program4, "log4.txt");
+        RepositoryInterface repo4 = new Repository(program4, logfile4);
         Controller controller4 = new Controller(repo4, true);
 
-        //exmaple 5
+        System.out.println("Input the log file for example5: ");
+        String logfile5=scanner.nextLine();
+        //example 5
         //bool a;
         // a= 2<3;
         //bool b;
@@ -84,7 +95,7 @@ class Interpreter {
                                         new IfStatement(new RelationalExpression(new ValueExpression(new IntValue(2)),new ValueExpression(new IntValue(3)),"!="),
                                                 new PrintStatement(new ValueExpression(new IntValue(5))),new PrintStatement(new ValueExpression(new IntValue(6))))))));
         ProgramState program5 = new ProgramState(example5);
-        RepositoryInterface repo5 = new Repository(program5, "log5.txt");
+        RepositoryInterface repo5 = new Repository(program5, logfile5);
         Controller controller5 = new Controller(repo5, true);
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));

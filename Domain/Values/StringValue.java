@@ -23,6 +23,6 @@ public class StringValue implements Value {
     }
     public boolean isEqual(Value valueFromUser){
         StringValue v = (StringValue)valueFromUser;
-        return value==v.getValue();
+        return value.equals(v.getValue());
     }
 }
