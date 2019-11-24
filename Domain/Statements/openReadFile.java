@@ -20,7 +20,7 @@ public class openReadFile implements StatementInterface {
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String,Value> table = state.getSymbolTable();
         MyDictionaryInterface<StringValue,BufferedReader> fileTable = state.getFileTable();
-        Value val= expression.evaluate(table);
+        Value val= expression.evaluate(table,state.getHeap());
         if(val.getType().equals(new StringType())){
             StringValue id=(StringValue) val;
             if(fileTable.isDefined(id)){

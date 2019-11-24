@@ -7,7 +7,7 @@ public class VariableExpression implements ExpressionInterface{
     public VariableExpression(String idFromUser){
         id=idFromUser;
     }
-    public Value evaluate(MyDictionaryInterface<String,Value> table){
+    public Value evaluate(MyDictionaryInterface<String,Value> table,HeapInterface<Integer,Value> heap){
         return table.lookup(id);
     }
     @Override

@@ -1,6 +1,7 @@
 package Domain.Expressions;
 import Domain.Values.BoolValue;
 import Interfaces.ExpressionInterface;
+import Interfaces.HeapInterface;
 import Interfaces.Value;
 import Interfaces.MyDictionaryInterface;
 import Domain.Types.IntType;
@@ -32,11 +33,11 @@ public class ArithmeticExpression implements ExpressionInterface{
                 throw new MyException("Invalid operation in ArthmeticExpression constructor\n");
         }
     }
-    public Value evaluate(MyDictionaryInterface<String,Value> table) {
+    public Value evaluate(MyDictionaryInterface<String,Value> table, HeapInterface<Integer,Value> heap) {
         Value v1,v2;
-        v1= expression1.evaluate(table);
+        v1= expression1.evaluate(table,heap);
         if (v1.getType().equals(new IntType())) {
-            v2 = expression2.evaluate(table);
+            v2 = expression2.evaluate(table,heap);
             if (v2.getType().equals(new IntType())) {
                 IntValue i1 = (IntValue)v1;
                 IntValue i2 = (IntValue)v2;

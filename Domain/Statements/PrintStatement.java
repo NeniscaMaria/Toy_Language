@@ -12,7 +12,7 @@ public class PrintStatement implements StatementInterface{
     }
     public ProgramState execute(@NotNull ProgramState state){
         MyListInterface<Value> output = state.getOutput();
-        output.add(exp.evaluate(state.getSymbolTable()));
+        output.add(exp.evaluate(state.getSymbolTable(),state.getHeap()));
         return state;
     }
 }

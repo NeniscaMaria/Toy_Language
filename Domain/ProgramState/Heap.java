@@ -1,11 +1,13 @@
 package Domain.ProgramState;
 
+import Domain.Values.ReferenceValue;
+import Exceptions.MyException;
 import Interfaces.HeapInterface;
 import Interfaces.Value;
 
 import java.util.HashMap;
 
-public class Heap implements HeapInterface {
+public class Heap implements HeapInterface<Integer,Value> {
     private HashMap<Integer, Value> heap;
     private int latestAddress;
     public Heap(){
@@ -28,5 +30,12 @@ public class Heap implements HeapInterface {
         int newAddress=generateNewAddress();
         heap.put(newAddress,valueFromUser);
         return newAddress;
+    }
+    public  Value getValue(Integer addressFromUser){
+        if(heap.containsKey(addressFromUser)){
+            Value value = heap.get(addressFromUser);
+            return value;
+        }else
+            throw new MyException(addressFromUser+" is not a valid address in the heap");
     }
 }

@@ -3,6 +3,7 @@ import Domain.Types.BoolType;
 import Domain.Values.BoolValue;
 import Exceptions.MyException;
 import Interfaces.ExpressionInterface;
+import Interfaces.HeapInterface;
 import Interfaces.MyDictionaryInterface;
 import Interfaces.Value;
 
@@ -10,11 +11,11 @@ public class LogicExpression {
     private ExpressionInterface expression1;
     private ExpressionInterface expression2;
     private String operation;
-    public Value evaluate(MyDictionaryInterface<String,Value> table) throws MyException {
+    public Value evaluate(MyDictionaryInterface<String,Value> table, HeapInterface<Integer,Value> heap) throws MyException {
         Value v1,v2;
-        v1= expression1.evaluate(table);
+        v1= expression1.evaluate(table,heap);
         if (v1.getType().equals(new BoolType())) {
-            v2 = expression2.evaluate(table);
+            v2 = expression2.evaluate(table,heap);
             if (v2.getType().equals(new BoolType())) {
                 BoolValue i1 = (BoolValue) v1;
                 BoolValue i2 = (BoolValue)v2;

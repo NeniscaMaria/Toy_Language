@@ -31,10 +31,10 @@ public class FileTable implements MyDictionaryInterface<StringValue,BufferedRead
     }
     @Override
     public String toString(){
-        String result = "FileTable:"+System.lineSeparator();
+        StringBuilder result = new StringBuilder("FileTable:" + System.lineSeparator());
         for(StringValue key:fileTable.keySet()){
-            result+=key.getValue()+System.lineSeparator();
+            result.append(key.getValue()).append(System.lineSeparator());
         }
-        return result;
+        return result.toString();
     }
 }

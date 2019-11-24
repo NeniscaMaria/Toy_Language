@@ -21,7 +21,7 @@ public class AssignmentStatement implements StatementInterface{
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String,Value> symbolsTable = state.getSymbolTable();
         if (symbolsTable.isDefined(id)){
-            Value val = expression.evaluate(symbolsTable);
+            Value val = expression.evaluate(symbolsTable,state.getHeap());
             Type typeID = (symbolsTable.getValue(id)).getType();
             if (val.getType().equals(typeID))
                 symbolsTable.update(id, val);

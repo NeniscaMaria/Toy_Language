@@ -4,6 +4,7 @@ import Domain.Values.BoolValue;
 import Domain.Values.IntValue;
 import Exceptions.MyException;
 import Interfaces.ExpressionInterface;
+import Interfaces.HeapInterface;
 import Interfaces.MyDictionaryInterface;
 import Interfaces.Value;
 
@@ -20,11 +21,11 @@ public class RelationalExpression implements ExpressionInterface {
     public String toString(){
         return expression1.toString()+relation+expression2.toString();
     }
-    public Value evaluate(MyDictionaryInterface<String,Value> table){
-        Value value1 = expression1.evaluate(table);
+    public Value evaluate(MyDictionaryInterface<String,Value> table, HeapInterface<Integer,Value> heap){
+        Value value1 = expression1.evaluate(table,heap);
         if(value1.getType().equals(new IntType())){
             IntValue v1 = (IntValue) value1;
-            Value value2 = expression2.evaluate(table);
+            Value value2 = expression2.evaluate(table,heap);
             if(value2.getType().equals(new IntType())){
                 IntValue v2 = (IntValue) value2;
                 switch(relation){

@@ -115,6 +115,23 @@ class Interpreter {
         ProgramState program6 = new ProgramState(example6);
         RepositoryInterface repo6 = new Repository(program6, "l6.txt");
         Controller controller6 = new Controller(repo6, true);
+
+        //example7
+        //Ref int v;
+        // new(v,20);
+        // Ref Ref int a;
+        // new(a,v);
+        // print(rH(v));
+        // print(rH(rH(a))+5)
+        StatementInterface example7=new CompoundStatement(new VariableDeclarationStatement("v",new ReferenceType(new IntType())),
+                new CompoundStatement(new HeapAllocation("v",new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(new VariableDeclarationStatement("a",new ReferenceType(new ReferenceType(new IntType()))),
+                                new CompoundStatement(new HeapAllocation("a",new VariableExpression("v")),
+                                        new CompoundStatement(new PrintStatement(new ReadHeap(new VariableExpression("v"))),
+                                                new PrintStatement(new ArithmeticExpression("+",new ReadHeap(new ReadHeap(new VariableExpression("a"))),new ValueExpression(new IntValue(5)))))))));
+        ProgramState program7 = new ProgramState(example7);
+        RepositoryInterface repo7 = new Repository(program7, "l7.txt");
+        Controller controller7 = new Controller(repo7, true);
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", example1.toString(), controller1));
@@ -123,6 +140,7 @@ class Interpreter {
         menu.addCommand(new RunExample("4", example4.toString(), controller4));
         menu.addCommand(new RunExample("5", example5.toString(), controller5));
         menu.addCommand(new RunExample("6", example6.toString(), controller6));
+        menu.addCommand(new RunExample("7", example7.toString(), controller7));
         menu.show();
     }
 }

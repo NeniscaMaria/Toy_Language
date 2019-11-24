@@ -22,7 +22,7 @@ public class HeapAllocation implements StatementInterface {
         if(table.isDefined(variableName)){
             Value valueOfVariable=table.lookup(variableName);
             System.out.println(valueOfVariable.getType());
-            Value value=expression.evaluate(table);
+            Value value=expression.evaluate(table,state.getHeap());
             if(valueOfVariable.getType().equals(new ReferenceType(value.getType()))){
                 ReferenceValue valueOfVar=(ReferenceValue)valueOfVariable;
                 if(value.getType().equals((valueOfVar.getLocationType()))){

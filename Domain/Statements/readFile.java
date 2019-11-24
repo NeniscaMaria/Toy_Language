@@ -27,7 +27,7 @@ public class readFile implements StatementInterface {
         MyDictionaryInterface<String, Value> symbolTable=state.getSymbolTable();
         if(symbolTable.isDefined(variableName)){
             if(symbolTable.lookup(variableName).getType().equals(new IntType())) {
-                Value val = expression.evaluate(symbolTable);
+                Value val = expression.evaluate(symbolTable,state.getHeap());
                 if (val.getType().equals(new StringType())) {
                     StringValue id = (StringValue) val;
                     MyDictionaryInterface<StringValue, BufferedReader> fileTable = state.getFileTable();

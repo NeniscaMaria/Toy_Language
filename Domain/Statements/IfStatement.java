@@ -24,7 +24,7 @@ public class IfStatement implements StatementInterface{
     }
     public ProgramState execute(ProgramState state){
         MyStackInterface<StatementInterface> stack = state.getStack();
-        Value condition = expression.evaluate(state.getSymbolTable());
+        Value condition = expression.evaluate(state.getSymbolTable(),state.getHeap());
         if(!condition.getType().equals(new BoolType())){
             throw new MyException("Conditional expression is not a boolean");
         }else{

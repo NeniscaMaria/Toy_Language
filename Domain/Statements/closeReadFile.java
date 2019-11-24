@@ -23,7 +23,7 @@ public class closeReadFile implements StatementInterface {
     }
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String, Value> symbolTable=state.getSymbolTable();
-        Value val=expression.evaluate(symbolTable);
+        Value val=expression.evaluate(symbolTable,state.getHeap());
         if(val.getType().equals(new StringType())){
             StringValue id = (StringValue)val;
             MyDictionaryInterface<StringValue, BufferedReader> fileTable=state.getFileTable();
