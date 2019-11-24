@@ -21,6 +21,9 @@ public class ReferenceValue implements Value {
     public int getAddress() {
         return address;
     }
+    public Type getLocationType(){
+        return locationType;
+    }
     public Type getType() { return new ReferenceType(locationType);}
     @Override
     public String toString(){

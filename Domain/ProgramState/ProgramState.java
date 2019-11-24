@@ -44,5 +44,6 @@ public class ProgramState {
     public MyDictionaryInterface<StringValue, BufferedReader> getFileTable(){
         return fileTable;
     }
+    public HeapInterface getHeap(){return heap;}
 }
 

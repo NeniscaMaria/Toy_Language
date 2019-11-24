@@ -10,6 +10,7 @@ import Interfaces.RepositoryInterface;
 import Interfaces.StatementInterface;
 import Repository.Repository;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -97,6 +98,23 @@ class Interpreter {
         ProgramState program5 = new ProgramState(example5);
         RepositoryInterface repo5 = new Repository(program5, logfile5);
         Controller controller5 = new Controller(repo5, true);
+
+        //example6
+        //Ref int v;
+        // new(v,20);
+        // Ref Ref int a;
+        // new(a,v);
+        // print(v);
+        // print(a)
+        StatementInterface example6=new CompoundStatement(new VariableDeclarationStatement("v",new ReferenceType(new IntType())),
+                new CompoundStatement(new HeapAllocation("v",new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(new VariableDeclarationStatement("a",new ReferenceType(new ReferenceType(new IntType()))),
+                                new CompoundStatement(new HeapAllocation("a",new VariableExpression("v")),
+                                        new CompoundStatement(new PrintStatement(new VariableExpression("v")),
+                new PrintStatement(new VariableExpression("a")))))));
+        ProgramState program6 = new ProgramState(example6);
+        RepositoryInterface repo6 = new Repository(program6, "l6.txt");
+        Controller controller6 = new Controller(repo6, true);
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", example1.toString(), controller1));
@@ -104,6 +122,7 @@ class Interpreter {
         menu.addCommand(new RunExample("3", example3.toString(), controller3));
         menu.addCommand(new RunExample("4", example4.toString(), controller4));
         menu.addCommand(new RunExample("5", example5.toString(), controller5));
+        menu.addCommand(new RunExample("6", example6.toString(), controller6));
         menu.show();
     }
 }

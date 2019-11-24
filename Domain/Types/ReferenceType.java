@@ -6,6 +6,7 @@ import Interfaces.Value;
 
 public class ReferenceType implements Type {
     private Type inner;
+    public ReferenceType(){ }
     public ReferenceType(Type inner) {this.inner=inner;}
     public Type getInner() {return inner;}
     public boolean equals(Object another){
