@@ -6,9 +6,10 @@ import Interfaces.HeapInterface;
 import Interfaces.Value;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Heap implements HeapInterface<Integer,Value> {
-    private HashMap<Integer, Value> heap;
+    private Map<Integer, Value> heap;
     private int latestAddress;
     public Heap(){
         heap = new HashMap<Integer, Value>();
@@ -46,5 +47,11 @@ public class Heap implements HeapInterface<Integer,Value> {
             heap.put(address,valueOfExpression);
         else
             throw new MyException("You tried to access a non-existing address!!");
+    }
+    public void setContent(Map<Integer,Value> newContent){
+        heap=newContent;
+    }
+    public Map<Integer,Value> getContent(){
+        return heap;
     }
 }

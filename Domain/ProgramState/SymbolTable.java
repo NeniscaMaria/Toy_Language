@@ -1,8 +1,12 @@
 package Domain.ProgramState;
+import Domain.Types.ReferenceType;
+import Domain.Values.ReferenceValue;
 import Exceptions.MyException;
 import Interfaces.MyDictionaryInterface;
+import Interfaces.Type;
 import Interfaces.Value;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 
 public class SymbolTable implements MyDictionaryInterface<String,Value>{
@@ -35,4 +39,24 @@ public class SymbolTable implements MyDictionaryInterface<String,Value>{
             result.append(key).append("-->").append(table.get(key).toString()).append(System.lineSeparator());
         return result.toString();
     }
+    public HashMap<String,Value> getContent(){
+        return table;
+    }
+    /*
+    public void getAddresses(){
+        HashMap<Value,Integer> addresses=new HashMap<>();
+        for(String key:table.keySet()){
+            Value v = table.get(key);
+            if(v instanceof ReferenceValue){
+                ReferenceValue v1 = (ReferenceValue)v;
+                //return v1.getAddress();
+                Type location=v1.getLocationType();
+                if(location instanceof ReferenceType){
+
+                }
+
+            }
+        }
+    }
+     */
 }

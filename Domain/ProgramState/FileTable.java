@@ -37,4 +37,7 @@ public class FileTable implements MyDictionaryInterface<StringValue,BufferedRead
         }
         return result.toString();
     }
+    public HashMap<StringValue,BufferedReader> getContent(){
+        return fileTable;
+    }
 }

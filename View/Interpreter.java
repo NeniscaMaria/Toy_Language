@@ -8,6 +8,7 @@ import Controller.Controller;
 import Exceptions.MyException;
 import Interfaces.RepositoryInterface;
 import Interfaces.StatementInterface;
+import Interfaces.Value;
 import Repository.Repository;
 
 import javax.swing.plaf.nimbus.State;
@@ -147,6 +148,36 @@ class Interpreter {
         ProgramState program8 = new ProgramState(example8);
         RepositoryInterface repo8 = new Repository(program8, "l8.txt");
         Controller controller8 = new Controller(repo8, true);
+        //example9
+        //Ref int v;
+        //new(v,20);
+        // Ref Ref int a;
+        // new(a,v);
+        // new(v,30);
+        // print(rH(rH(a)))
+        StatementInterface example9 = new CompoundStatement(new VariableDeclarationStatement("v",new ReferenceType(new IntType())),
+                new CompoundStatement(new HeapAllocation("v",new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(new VariableDeclarationStatement("a",new ReferenceType(new ReferenceType(new IntType()))),
+                                new CompoundStatement(new HeapAllocation("a",new VariableExpression("v")),
+                                        new CompoundStatement(new HeapAllocation("v",new ValueExpression(new IntValue(30))),
+                                                new PrintStatement(new ReadHeap(new ReadHeap(new VariableExpression("a")))))))));
+        ProgramState program9 = new ProgramState(example9);
+        RepositoryInterface repo9 = new Repository(program9, "l9.txt");
+        Controller controller9 = new Controller(repo9, true);
+        //example10
+        // int v;
+        // v=4;
+        // (while (v>0) print(v);v=v-1);
+        // print(v)
+        StatementInterface example10=new CompoundStatement(new VariableDeclarationStatement("v",new IntType()),
+                new CompoundStatement(new AssignmentStatement("v",new ValueExpression(new IntValue(4))),
+                        new CompoundStatement(new While(new RelationalExpression(new VariableExpression("v"),new ValueExpression(new IntValue(0)),">"),
+                                new CompoundStatement(new PrintStatement(new VariableExpression("v")),new AssignmentStatement("v",
+                                        new ArithmeticExpression("-",new VariableExpression("v"),new ValueExpression(new IntValue(1)))))),
+                        new PrintStatement(new VariableExpression("v")))));
+        ProgramState program10 = new ProgramState(example10);
+        RepositoryInterface repo10 = new Repository(program10, "l10.txt");
+        Controller controller10 = new Controller(repo10, true);
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", example1.toString(), controller1));
@@ -157,6 +188,8 @@ class Interpreter {
         menu.addCommand(new RunExample("6", example6.toString(), controller6));
         menu.addCommand(new RunExample("7", example7.toString(), controller7));
         menu.addCommand(new RunExample("8", example8.toString(), controller8));
+        menu.addCommand(new RunExample("9", example9.toString(), controller9));
+        menu.addCommand(new RunExample("10", example10.toString(), controller10));
         menu.show();
     }
 }
