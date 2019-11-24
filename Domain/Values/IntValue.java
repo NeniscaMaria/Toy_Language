@@ -19,7 +19,10 @@ public class IntValue implements Value{
         return new IntType();
     }
     public boolean isEqual(Value valueFromUser){
-        IntValue v = (IntValue)valueFromUser;
-        return value==v.getValue();
+        if (valueFromUser instanceof IntValue) {
+            IntValue v = (IntValue) valueFromUser;
+            return value == v.getValue();
+        }
+        return false;
     }
 }

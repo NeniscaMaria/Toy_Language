@@ -13,8 +13,11 @@ public class BoolValue implements Value{
     }
     @Override
     public boolean isEqual(Value valueFromUser){
-        BoolValue v= (BoolValue)valueFromUser;
-        return value==v.getValue();
+        if (valueFromUser instanceof BoolValue) {
+            BoolValue v = (BoolValue) valueFromUser;
+            return value == v.getValue();
+        }
+        return false;
     }
 
     public String toString(){
