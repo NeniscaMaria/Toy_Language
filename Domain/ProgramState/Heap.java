@@ -5,7 +5,10 @@ import Exceptions.MyException;
 import Interfaces.HeapInterface;
 import Interfaces.Value;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Heap implements HeapInterface<Integer,Value> {
@@ -53,5 +56,14 @@ public class Heap implements HeapInterface<Integer,Value> {
     }
     public Map<Integer,Value> getContent(){
         return heap;
+    }
+    public List<Integer> getInAddresses(){
+        List<Integer> addresses=new ArrayList<>();
+        for(Integer key:heap.keySet()){
+            if(heap.get(key) instanceof ReferenceValue){
+                addresses.add(((ReferenceValue) heap.get(key)).getAddress());
+            }
+        }
+        return addresses;
     }
 }

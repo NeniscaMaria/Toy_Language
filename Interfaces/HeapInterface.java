@@ -1,6 +1,6 @@
 package Interfaces;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface HeapInterface<A,B> {
@@ -10,4 +10,5 @@ public interface HeapInterface<A,B> {
     void update(A address, B valueOfExpression);
     void setContent(Map<A,B> newContent);
     Map<A,B> getContent();
+    List<A> getInAddresses();
 }

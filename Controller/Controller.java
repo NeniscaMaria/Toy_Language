@@ -31,7 +31,7 @@ public class Controller implements ControllerInterface {
         currentStatement.execute(state);
         repository.logProgramStateExecution();
     }
-    private Map<Integer, Value> unsafeGarbageCollector(List<Integer> symbolTableAddresses, Map<Integer, Value> heap){
+    private Map<Integer, Value> garbageCollector(List<Integer> symbolTableAddresses, Map<Integer, Value> heap){
         final Map<Integer, Value> collect = heap.entrySet().stream()
                 .filter(e -> symbolTableAddresses.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -52,10 +52,12 @@ public class Controller implements ControllerInterface {
             displayCurrentState();
         while(!program.getStack().isEmpty()){
             oneStepExecution(program);
+            List<Integer> addresses=getAddressesFromSymbolTable(program.getSymbolTable().getContent().values());
+            addresses.addAll(program.getHeap().getInAddresses());
             repository.logProgramStateExecution();
             HeapInterface heap = program.getHeap();
-            heap.setContent(unsafeGarbageCollector(
-                    getAddressesFromSymbolTable(program.getSymbolTable().getContent().values()),
+            heap.setContent(garbageCollector(
+                    addresses,
                     heap.getContent()));
 
             repository.logProgramStateExecution();

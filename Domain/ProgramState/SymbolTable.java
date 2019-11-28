@@ -42,21 +42,4 @@ public class SymbolTable implements MyDictionaryInterface<String,Value>{
     public HashMap<String,Value> getContent(){
         return table;
     }
-    /*
-    public void getAddresses(){
-        HashMap<Value,Integer> addresses=new HashMap<>();
-        for(String key:table.keySet()){
-            Value v = table.get(key);
-            if(v instanceof ReferenceValue){
-                ReferenceValue v1 = (ReferenceValue)v;
-                //return v1.getAddress();
-                Type location=v1.getLocationType();
-                if(location instanceof ReferenceType){
-
-                }
-
-            }
-        }
-    }
-     */
 }
