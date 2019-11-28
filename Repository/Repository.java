@@ -20,15 +20,20 @@ public class Repository implements RepositoryInterface {
         logFilePath=logFilePathFromUser;
         states=s;
     }
-
+    public ArrayList<ProgramState> getProgramsList(){
+        return states;
+    }
+    public void setProgramsList(ArrayList<ProgramState> listFromUser){
+        states=listFromUser;
+    }
     public ProgramState getCurrentProgramState(){
         return states.get(states.size()-1);
     }
-    public void logProgramStateExecution() throws IOException {
+    public void logProgramStateExecution(ProgramState state) throws IOException {
         PrintWriter logFile=null;
         try {
             logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
-            logFile.println(getCurrentProgramState());
+            logFile.println(state);
             logFile.println(System.lineSeparator());
 
         }catch(FileNotFoundException e){

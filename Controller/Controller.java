@@ -23,14 +23,7 @@ public class Controller implements ControllerInterface {
         repository=repositoryFromUser;
         display=displayFromUSer;
     }
-    public void oneStepExecution(ProgramState state) throws MyException, IOException {
-        MyStackInterface<StatementInterface> stack = state.getStack();
-        if(stack.isEmpty())
-            throw new MyException("Execution stack is empty!");
-        StatementInterface currentStatement=stack.pop();
-        currentStatement.execute(state);
-        repository.logProgramStateExecution();
-    }
+
     private Map<Integer, Value> garbageCollector(List<Integer> symbolTableAddresses, Map<Integer, Value> heap){
         final Map<Integer, Value> collect = heap.entrySet().stream()
                 .filter(e -> symbolTableAddresses.contains(e.getKey()))
@@ -44,23 +37,18 @@ public class Controller implements ControllerInterface {
                 .collect(Collectors.toList());
 
     }
-
     public void allStepExecution() throws IOException {
         ProgramState program = repository.getCurrentProgramState();
-        repository.logProgramStateExecution();
+        repository.logProgramStateExecution(program);
         if(display)
             displayCurrentState();
         while(!program.getStack().isEmpty()){
-            oneStepExecution(program);
+            program.oneStepExecution();
             List<Integer> addresses=getAddressesFromSymbolTable(program.getSymbolTable().getContent().values());
             addresses.addAll(program.getHeap().getInAddresses());
-            repository.logProgramStateExecution();
             HeapInterface heap = program.getHeap();
-            heap.setContent(garbageCollector(
-                    addresses,
-                    heap.getContent()));
-
-            repository.logProgramStateExecution();
+            heap.setContent(garbageCollector(addresses,heap.getContent()));
+            repository.logProgramStateExecution(program);
             if(display)
                 displayCurrentState();
         }
