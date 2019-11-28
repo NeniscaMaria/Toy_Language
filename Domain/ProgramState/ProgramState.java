@@ -27,6 +27,7 @@ public class ProgramState {
         fileTable=fileTableFromUser;
         executionStack.push(programFromUser);
         heap=heapFromUser;
+        //TODO: generate unique id
     }
     public ProgramState(StatementInterface programFromUser){
         originalProgram=programFromUser;
@@ -36,6 +37,7 @@ public class ProgramState {
         fileTable=new FileTable();
         executionStack.push(originalProgram);
         heap=new Heap();
+        //TODO: generate unique id
     }
     public ProgramState oneStepExecution() throws MyException, IOException {
         if(executionStack.isEmpty())

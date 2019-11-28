@@ -42,4 +42,9 @@ public class SymbolTable implements MyDictionaryInterface<String,Value>{
     public HashMap<String,Value> getContent(){
         return table;
     }
+    public MyDictionaryInterface<String,Value> clone(){
+        MyDictionaryInterface<String,Value> deepCopy=new SymbolTable();
+        //TODO
+        return deepCopy;
+    }
 }

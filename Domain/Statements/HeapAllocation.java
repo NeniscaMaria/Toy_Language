@@ -39,6 +39,6 @@ public class HeapAllocation implements StatementInterface {
                 throw new MyException(variableName+" is not a reference type");
         }else
             throw new MyException(variableName+" is not defined");
-        return state;
+        return null;
     }
 }

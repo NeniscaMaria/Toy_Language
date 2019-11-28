@@ -40,4 +40,9 @@ public class FileTable implements MyDictionaryInterface<StringValue,BufferedRead
     public HashMap<StringValue,BufferedReader> getContent(){
         return fileTable;
     }
+    public MyDictionaryInterface<StringValue,BufferedReader> clone(){
+        MyDictionaryInterface<StringValue,BufferedReader> deepCopy=new FileTable();
+        //TODO
+        return deepCopy;
+    }
 }

@@ -22,6 +22,6 @@ public class CompoundStatement implements StatementInterface{
         MyStackInterface<StatementInterface> stack = state.getStack();
         stack.push(second);
         stack.push(first);
-        return state;
+        return null;
     }
 }

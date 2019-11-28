@@ -22,6 +22,6 @@ public class VariableDeclarationStatement implements StatementInterface{
         }else{
             symbolTable.update(name,type.getDefaultValue());
         }
-        return state;
+        return null;
     }
 }

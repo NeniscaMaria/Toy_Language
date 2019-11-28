@@ -40,6 +40,6 @@ public class closeReadFile implements StatementInterface {
 
         }else
             throw new MyException(expression+" does not evaluate as a StringType");
-        return state;
+        return null;
     }
 }

@@ -9,4 +9,5 @@ public interface MyDictionaryInterface<A,B> {
     B lookup(A id);
     void delete(A id);
     HashMap<A,B> getContent();
+    MyDictionaryInterface<A,B> clone();
 }
