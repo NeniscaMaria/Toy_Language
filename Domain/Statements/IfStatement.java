@@ -33,6 +33,6 @@ public class IfStatement implements StatementInterface{
             else
                 stack.push(elseStatement);
         }
-        return null;
+        return state;
     }
 }

@@ -38,6 +38,6 @@ public class WriteHeap implements StatementInterface {
                 throw new MyException(variableName+" is not of Reference type");
         }else
             throw new MyException(variableName+" is not defined");
-        return null;
+        return state;
     }
 }

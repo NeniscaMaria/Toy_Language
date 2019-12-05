@@ -32,6 +32,6 @@ public class While implements StatementInterface {
             }
         }else
             throw new MyException(condition+" does not evaluate as boolean");
-        return null;
+        return state;
     }
 }

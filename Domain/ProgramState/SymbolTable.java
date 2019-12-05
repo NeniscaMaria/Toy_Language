@@ -14,6 +14,9 @@ public class SymbolTable implements MyDictionaryInterface<String,Value>{
     public SymbolTable(){
         table=new HashMap<String,Value>();
     }
+    private SymbolTable(HashMap<String,Value> valuesFromUser){
+        table=valuesFromUser;
+    }
     public boolean isDefined(String id){
         return table.containsKey(id);
     }
@@ -43,8 +46,9 @@ public class SymbolTable implements MyDictionaryInterface<String,Value>{
         return table;
     }
     public MyDictionaryInterface<String,Value> clone(){
-        MyDictionaryInterface<String,Value> deepCopy=new SymbolTable();
-        //TODO
-        return deepCopy;
+        HashMap<String,Value> clone = new HashMap<String,Value>();
+        for(String key : table.keySet())
+            clone.put(key, table.get(key));
+        return new SymbolTable(clone);
     }
 }
