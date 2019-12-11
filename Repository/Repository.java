@@ -26,6 +26,7 @@ public class Repository implements RepositoryInterface {
         return states.get(states.size()-1);
     }
     public void logProgramStateExecution(ProgramState state){
+        //logs the execution of a single program state (given by the user)
         PrintWriter logFile=null;
         try {
             logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
@@ -40,6 +41,7 @@ public class Repository implements RepositoryInterface {
         }
     }
     public void logProgramStatesExecution(){
+        //logs the execution of all the program states currently existing in the repository
         PrintWriter logFile=null;
         try {
             logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));

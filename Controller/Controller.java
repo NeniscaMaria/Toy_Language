@@ -15,12 +15,10 @@ import java.util.stream.Collectors;
 
 public class Controller implements ControllerInterface {
     private RepositoryInterface repository;
-    private boolean display;
     private ExecutorService executor;
 
-    public Controller(RepositoryInterface repositoryFromUser,boolean displayFromUSer){
+    public Controller(RepositoryInterface repositoryFromUser){
         repository=repositoryFromUser;
-        display=displayFromUSer;
     }
 
     private List<ProgramState> removeCompletedPrograms(List<ProgramState> programListFromUser){
@@ -42,9 +40,6 @@ public class Controller implements ControllerInterface {
 
     }
     private void oneStepForAllPrograms(List<ProgramState> programList) {
-        //programList.forEach(program-> {
-        //    repository.logProgramStateExecution(program);
-        //});
         //prepare the list of callables fot the concurrent one step execution of the program states
         List<Callable<ProgramState>> callList = programList.stream().filter(p->!p.getStack().isEmpty())
                 .map((ProgramState p) ->
@@ -73,6 +68,7 @@ public class Controller implements ControllerInterface {
                 program.getHeap().setContent(conservativeGarbageCollector(
                         addresses, program.getHeap().getContent()));
             });
+            //setting the new program list (after we removed the completed ones) and logging the so far execution
             repository.setProgramsList(programList);
             repository.logProgramStatesExecution();
         }catch(InterruptedException e){
@@ -88,7 +84,7 @@ public class Controller implements ControllerInterface {
 
         }
         executor.shutdownNow();
-            //HERE the repository still contains at least one Completed Prg
+            //Here the repository still contains at least one Completed Prg
             // and its List<PrgState> is not empty. Note that oneStepForAllPrg calls the method
             //setPrgList of repository in order to change the repository
             // update the repository state

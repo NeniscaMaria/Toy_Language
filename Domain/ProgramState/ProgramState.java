@@ -21,21 +21,24 @@ public class ProgramState {
     private Lock lock;
     @Override
     public String toString(){
-        return "Thread ID: "+Integer.toString(ID)+System.lineSeparator()+executionStack.toString()+symbolTable.toString()+output.toString()+fileTable.toString()+heap.toString();
+        return "Thread ID: "+Integer.toString(ID)+System.lineSeparator()+executionStack.toString()+symbolTable.toString()
+                +output.toString()+fileTable.toString()+heap.toString();
     }
     public int getID(){
         return ID;
     }
-    private void generateNewID(){
+    public int generateNewID(){
         //TODO: synchronized
         lock.lock();
-        ID=nextID;
-        nextID=nextID+1;
+        int copy=nextID;
+        nextID+=1;
         lock.unlock();
+        return copy;
     }
     public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,
                         MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser,
                         HeapInterface heapFromUser){
+        //constructor that does not receive a thread id from the user
         lock = new ReentrantLock();
         executionStack=executionStackFromUser;
         symbolTable=symbolTableFromUser;
@@ -44,13 +47,15 @@ public class ProgramState {
         fileTable=fileTableFromUser;
         executionStack.push(programFromUser);
         heap=heapFromUser;
-        nextID=1;
+        ID=1;
+        nextID=2;
         Lock lock = new ReentrantLock();
         generateNewID();
     }
     public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,
                         MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser,
                         HeapInterface heapFromUser,int idFromUser){
+        //constructor that receives thread id from user
         lock = new ReentrantLock();
         executionStack=executionStackFromUser;
         symbolTable=symbolTableFromUser;
@@ -60,6 +65,7 @@ public class ProgramState {
         executionStack.push(programFromUser);
         heap=heapFromUser;
         ID=idFromUser;
+        nextID=idFromUser+1;
         Lock lock = new ReentrantLock();
     }
     public ProgramState(StatementInterface programFromUser){
@@ -71,9 +77,9 @@ public class ProgramState {
         fileTable=new FileTable();
         executionStack.push(originalProgram);
         heap=new Heap();
-        nextID=1;
+        nextID=2;
+        ID=1;
         Lock lock = new ReentrantLock();
-        generateNewID();
 
     }
     public ProgramState oneStepExecution() throws MyException, IOException {
