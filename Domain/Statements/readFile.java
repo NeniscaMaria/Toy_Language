@@ -55,6 +55,6 @@ public class readFile implements StatementInterface {
         }else{
             throw new MyException(variableName+" is not defined");
         }
-        return state;
+        return null;
     }
 }

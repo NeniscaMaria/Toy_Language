@@ -39,4 +39,20 @@ public class Repository implements RepositoryInterface {
                 logFile.close();
         }
     }
+    public void logProgramStatesExecution(){
+        PrintWriter logFile=null;
+        try {
+            logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
+            for(ProgramState state: states){
+                logFile.println("Thread ID "+Integer.toString(state.getID())+System.lineSeparator()+state.getStack().toString()
+                        +state.getSymbolTable().toString());
+            }
+            logFile.println(states.get(0).getHeap().toString()+states.get(0).getOutput().toString());
+        }catch(IOException e){
+            System.err.println(e.getMessage());
+        }finally{
+            if(logFile!=null)
+                logFile.close();
+        }
+    }
 }

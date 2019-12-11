@@ -42,18 +42,15 @@ public class Controller implements ControllerInterface {
 
     }
     private void oneStepForAllPrograms(List<ProgramState> programList) {
-        programList.forEach(program-> {
-            repository.logProgramStateExecution(program);
-        });
+        //programList.forEach(program-> {
+        //    repository.logProgramStateExecution(program);
+        //});
         //prepare the list of callables fot the concurrent one step execution of the program states
-        List<Callable<ProgramState>> callList = programList.stream()
-                .map((ProgramState p) -> {
-                    try {
-                        return (Callable<ProgramState>)(p.oneStepExecution());
-                    } catch (IOException e) {
-                        throw new MyException(e.getMessage());
-                    }
-                }).collect(Collectors.toList());
+        List<Callable<ProgramState>> callList = programList.stream().filter(p->!p.getStack().isEmpty())
+                .map((ProgramState p) ->
+                        (Callable<ProgramState>)(()-> {
+                            return p.oneStepExecution();
+                        })).collect(Collectors.toList());
         //starting the execution
         try{
             List<ProgramState> newProgramList = executor.invokeAll(callList).stream()
@@ -77,6 +74,7 @@ public class Controller implements ControllerInterface {
                         addresses, program.getHeap().getContent()));
             });
             repository.setProgramsList(programList);
+            repository.logProgramStatesExecution();
         }catch(InterruptedException e){
             throw new MyException(e.getMessage());
         }

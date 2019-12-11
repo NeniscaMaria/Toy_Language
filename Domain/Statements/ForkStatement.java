@@ -17,7 +17,7 @@ public class ForkStatement implements StatementInterface {
     public ProgramState execute(ProgramState state){
         MyStackInterface<StatementInterface> newExecutionStack=new ExecutionStack();
         ProgramState newProgramState = new ProgramState(newExecutionStack, state.getSymbolTable().clone(),state.getOutput(),
-                    statement,state.getFileTable(),state.getHeap());
+                    statement,state.getFileTable(),state.getHeap(),state.getID()*10);
         return newProgramState;
 
     }

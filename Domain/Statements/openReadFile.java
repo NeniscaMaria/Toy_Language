@@ -37,6 +37,6 @@ public class openReadFile implements StatementInterface {
         }
         else
             throw new MyException("This is not a StringType (in openReadFile("+expression+"))");
-        return state;
+        return null;
     }
 }

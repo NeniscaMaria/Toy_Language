@@ -4,7 +4,7 @@ import Interfaces.StatementInterface;
 
 public class NoOperationStatement implements StatementInterface{
     public ProgramState execute(ProgramState state){
-        return state;
+        return null;
     }
     @Override
     public String toString(){

@@ -23,6 +23,9 @@ public class ProgramState {
     public String toString(){
         return "Thread ID: "+Integer.toString(ID)+System.lineSeparator()+executionStack.toString()+symbolTable.toString()+output.toString()+fileTable.toString()+heap.toString();
     }
+    public int getID(){
+        return ID;
+    }
     private void generateNewID(){
         //TODO: synchronized
         lock.lock();
@@ -30,7 +33,9 @@ public class ProgramState {
         nextID=nextID+1;
         lock.unlock();
     }
-    public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser, HeapInterface heapFromUser){
+    public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,
+                        MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser,
+                        HeapInterface heapFromUser){
         lock = new ReentrantLock();
         executionStack=executionStackFromUser;
         symbolTable=symbolTableFromUser;
@@ -40,7 +45,22 @@ public class ProgramState {
         executionStack.push(programFromUser);
         heap=heapFromUser;
         nextID=1;
+        Lock lock = new ReentrantLock();
         generateNewID();
+    }
+    public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,
+                        MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser,
+                        HeapInterface heapFromUser,int idFromUser){
+        lock = new ReentrantLock();
+        executionStack=executionStackFromUser;
+        symbolTable=symbolTableFromUser;
+        output=outputFromUser;
+        originalProgram=programFromUser;
+        fileTable=fileTableFromUser;
+        executionStack.push(programFromUser);
+        heap=heapFromUser;
+        ID=idFromUser;
+        Lock lock = new ReentrantLock();
     }
     public ProgramState(StatementInterface programFromUser){
         lock = new ReentrantLock();
@@ -52,8 +72,9 @@ public class ProgramState {
         executionStack.push(originalProgram);
         heap=new Heap();
         nextID=1;
-        generateNewID();
         Lock lock = new ReentrantLock();
+        generateNewID();
+
     }
     public ProgramState oneStepExecution() throws MyException, IOException {
         if(executionStack.isEmpty())

@@ -12,4 +12,5 @@ public interface RepositoryInterface {
     void logProgramStateExecution(ProgramState state);
     List<ProgramState> getProgramsList();
     void setProgramsList(List<ProgramState> listFromUser);
+    void logProgramStatesExecution();
 }

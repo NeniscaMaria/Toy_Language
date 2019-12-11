@@ -29,7 +29,7 @@ public class AssignmentStatement implements StatementInterface{
                 throw new MyException("declared type of variable " + id + " and type of the assigned expression do not match");
         }else
             throw new MyException("the used variable "+id+" was not declared before");
-        return state;
+        return null;
         }
 }
 
