@@ -5,17 +5,16 @@ import Exceptions.MyException;
 import Interfaces.HeapInterface;
 import Interfaces.Value;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Heap implements HeapInterface<Integer,Value> {
     private Map<Integer, Value> heap;
     private int latestAddress;
     public Heap(){
-        heap = new HashMap<Integer, Value>();
+        heap = new ConcurrentHashMap<Integer, Value>();
         latestAddress=0;
     }
     @Override

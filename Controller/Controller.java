@@ -43,9 +43,7 @@ public class Controller implements ControllerInterface {
         //prepare the list of callables fot the concurrent one step execution of the program states
         List<Callable<ProgramState>> callList = programList.stream().filter(p->!p.getStack().isEmpty())
                 .map((ProgramState p) ->
-                        (Callable<ProgramState>)(()-> {
-                            return p.oneStepExecution();
-                        })).collect(Collectors.toList());
+                        (Callable<ProgramState>)(p::oneStepExecution)).collect(Collectors.toList());
         //starting the execution
         try{
             List<ProgramState> newProgramList = executor.invokeAll(callList).stream()
@@ -58,7 +56,7 @@ public class Controller implements ControllerInterface {
                         } catch (InterruptedException | ExecutionException e) {
                             throw new MyException(e.getMessage());
                         }
-                    }).filter(p -> p!=null).collect(Collectors.toList());
+                    }).filter(Objects::nonNull).collect(Collectors.toList());
             programList.addAll(newProgramList);
             //collecting the garbage for each program state
             programList.forEach(program -> {

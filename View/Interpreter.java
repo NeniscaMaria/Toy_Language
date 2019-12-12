@@ -15,6 +15,11 @@ import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*
+when concurrent
+1)concurrenthashmap
+2)synchronize heapttable (read write)
+ */
 class Interpreter {
 
     public static void main(String[] args) {
