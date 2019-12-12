@@ -1,6 +1,8 @@
 package Controller;
 
 import Domain.ProgramState.ProgramState;
+import Domain.ProgramState.SymbolTable;
+import Domain.TypeChecker;
 import Domain.Values.ReferenceValue;
 import Exceptions.MyException;
 import Interfaces.*;
@@ -19,6 +21,10 @@ public class Controller implements ControllerInterface {
 
     public Controller(RepositoryInterface repositoryFromUser){
         repository=repositoryFromUser;
+    }
+    public void typecheck(){
+        MyDictionaryInterface<String,Type> typeEnvironment=new TypeChecker();
+        repository.typecheck(typeEnvironment);
     }
 
     private List<ProgramState> removeCompletedPrograms(List<ProgramState> programListFromUser){

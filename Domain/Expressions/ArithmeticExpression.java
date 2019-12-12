@@ -1,9 +1,6 @@
 package Domain.Expressions;
 import Domain.Values.BoolValue;
-import Interfaces.ExpressionInterface;
-import Interfaces.HeapInterface;
-import Interfaces.Value;
-import Interfaces.MyDictionaryInterface;
+import Interfaces.*;
 import Domain.Types.IntType;
 import Domain.Values.IntValue;
 import Exceptions.MyException;
@@ -81,6 +78,18 @@ public class ArithmeticExpression implements ExpressionInterface{
         }
         result+=expression2.toString();
         return result;
+    }
+    public Type typecheck (MyDictionaryInterface<String,Type> typeEnvironment){
+        Type type1,type2;
+        type1=expression1.typecheck(typeEnvironment);
+        type2=expression2.typecheck(typeEnvironment);
+        if(type1.equals(new IntType())){
+            if (type2.equals(new IntType()))
+                return new IntType();
+            else
+                throw new MyException(this.toString()+": second expression does not evaluate as IntType");
+        }else
+            throw new MyException(this.toString()+": first expression does not evaluate as IntType");
     }
 }
 

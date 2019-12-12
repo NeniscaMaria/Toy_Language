@@ -1,11 +1,9 @@
 package Domain.Expressions;
 import Domain.Types.BoolType;
+import Domain.Types.IntType;
 import Domain.Values.BoolValue;
 import Exceptions.MyException;
-import Interfaces.ExpressionInterface;
-import Interfaces.HeapInterface;
-import Interfaces.MyDictionaryInterface;
-import Interfaces.Value;
+import Interfaces.*;
 
 public class LogicExpression {
     private ExpressionInterface expression1;
@@ -32,5 +30,17 @@ public class LogicExpression {
     @Override
     public String toString(){
         return expression1.toString()+" "+operation+" "+expression2.toString();
+    }
+    public Type typecheck (MyDictionaryInterface<String,Type> typeEnvironment){
+        Type type1,type2;
+        type1=expression1.typecheck(typeEnvironment);
+        type2=expression2.typecheck(typeEnvironment);
+        if(type1.equals(new BoolType())){
+            if (type2.equals(new BoolType()))
+                return new IntType();
+            else
+                throw new MyException(this.toString()+": second expression does not evaluate as BoolType");
+        }else
+            throw new MyException(this.toString()+": first expression does not evaluate as BoolType");
     }
 }

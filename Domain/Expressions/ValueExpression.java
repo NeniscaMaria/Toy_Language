@@ -1,8 +1,5 @@
 package Domain.Expressions;
-import Interfaces.ExpressionInterface;
-import Interfaces.HeapInterface;
-import Interfaces.Value;
-import Interfaces.MyDictionaryInterface;
+import Interfaces.*;
 
 public class ValueExpression implements ExpressionInterface{
     private Value e;
@@ -13,5 +10,8 @@ public class ValueExpression implements ExpressionInterface{
     @Override
     public String toString(){
         return e.toString();
+    }
+    public Type typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        return e.getType();
     }
 }

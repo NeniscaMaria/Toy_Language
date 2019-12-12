@@ -1,11 +1,10 @@
 package Domain.Expressions;
 
+import Domain.Types.ReferenceType;
 import Domain.Values.ReferenceValue;
 import Exceptions.MyException;
-import Interfaces.ExpressionInterface;
-import Interfaces.HeapInterface;
-import Interfaces.MyDictionaryInterface;
-import Interfaces.Value;
+import Interfaces.*;
+
 
 public class ReadHeap implements ExpressionInterface {
     private ExpressionInterface expression;
@@ -25,5 +24,13 @@ public class ReadHeap implements ExpressionInterface {
             return valueFromHeap;
         }else
             throw new MyException(expression.toString()+" does not evaluate as a ReferenceValue");
+    }
+    public Type typecheck (MyDictionaryInterface<String,Type> typeEnvironment){
+        Type type=expression.typecheck(typeEnvironment);
+        if(type instanceof ReferenceType){
+            ReferenceType refType=(ReferenceType)type;
+            return refType.getInner();
+        }else
+            throw new MyException(expression.toString()+" does not evaluate as ReferenceType");
     }
 }

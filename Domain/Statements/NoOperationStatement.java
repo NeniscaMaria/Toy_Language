@@ -1,6 +1,11 @@
 package Domain.Statements;
 import Domain.ProgramState.ProgramState;
+import Domain.Types.IntType;
+import Domain.Types.StringType;
+import Exceptions.MyException;
+import Interfaces.MyDictionaryInterface;
 import Interfaces.StatementInterface;
+import Interfaces.Type;
 
 public class NoOperationStatement implements StatementInterface{
     public ProgramState execute(ProgramState state){
@@ -9,5 +14,8 @@ public class NoOperationStatement implements StatementInterface{
     @Override
     public String toString(){
         return "No Operation";
+    }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        return typeEnvironment;
     }
 }

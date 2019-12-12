@@ -2,7 +2,11 @@ package Domain.Statements;
 
 import Domain.ProgramState.ExecutionStack;
 import Domain.ProgramState.ProgramState;
+import Domain.Types.BoolType;
+import Exceptions.MyException;
+import Interfaces.MyDictionaryInterface;
 import Interfaces.StatementInterface;
+import Interfaces.Type;
 
 public class ForkStatement implements StatementInterface {
     private StatementInterface statement;
@@ -18,5 +22,7 @@ public class ForkStatement implements StatementInterface {
                     statement,state.getFileTable(),state.getHeap(),state.generateNewID());
 
     }
-
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        return statement.typecheck(typeEnvironment);
+    }
 }

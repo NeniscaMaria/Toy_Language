@@ -1,12 +1,10 @@
 package Domain.Expressions;
+import Domain.Types.BoolType;
 import Domain.Types.IntType;
 import Domain.Values.BoolValue;
 import Domain.Values.IntValue;
 import Exceptions.MyException;
-import Interfaces.ExpressionInterface;
-import Interfaces.HeapInterface;
-import Interfaces.MyDictionaryInterface;
-import Interfaces.Value;
+import Interfaces.*;
 
 public class RelationalExpression implements ExpressionInterface {
     private ExpressionInterface expression1;
@@ -48,5 +46,17 @@ public class RelationalExpression implements ExpressionInterface {
                 throw new MyException(toString()+": Second expression does not evaluate as an int expression");
         }else
             throw new MyException(toString()+": First expression does not evaluate as an int expression");
+    }
+    public Type typecheck (MyDictionaryInterface<String,Type> typeEnvironment){
+        Type type1,type2;
+        type1=expression1.typecheck(typeEnvironment);
+        type2=expression2.typecheck(typeEnvironment);
+        if(type1.equals(new IntType())){
+            if (type2.equals(new IntType()))
+                return new BoolType();
+            else
+                throw new MyException(this.toString()+": second expression does not evaluate as IntType");
+        }else
+            throw new MyException(this.toString()+": first expression does not evaluate as IntType");
     }
 }

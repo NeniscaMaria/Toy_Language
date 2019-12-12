@@ -40,4 +40,12 @@ public class WriteHeap implements StatementInterface {
             throw new MyException(variableName+" is not defined");
         return null;
     }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        Type typeVariable=typeEnvironment.lookup(variableName);
+        Type typeExpression=expression.typecheck(typeEnvironment);
+        if(typeVariable.equals(new ReferenceType(typeExpression)))
+            return typeEnvironment;
+        else
+            throw new MyException(this.toString()+": right hand side and left hand side of have different types");
+    }
 }

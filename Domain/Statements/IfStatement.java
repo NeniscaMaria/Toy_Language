@@ -3,10 +3,7 @@ import Domain.ProgramState.ProgramState;
 import Domain.Types.BoolType;
 import Domain.Values.BoolValue;
 import Exceptions.MyException;
-import Interfaces.MyStackInterface;
-import Interfaces.StatementInterface;
-import Interfaces.ExpressionInterface;
-import Interfaces.Value;
+import Interfaces.*;
 
 public class IfStatement implements StatementInterface{
     private ExpressionInterface expression;
@@ -34,5 +31,14 @@ public class IfStatement implements StatementInterface{
                 stack.push(elseStatement);
         }
         return null;
+    }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        Type typeExpression=expression.typecheck(typeEnvironment);
+        if(typeExpression.equals(new BoolType())){
+            thenStatement.typecheck(typeEnvironment.clone());
+            elseStatement.typecheck(typeEnvironment.clone());
+            return typeEnvironment;
+        }else
+            throw new MyException("The condition "+expression.toString()+" of IF does not have BoolType");
     }
 }

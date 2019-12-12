@@ -24,4 +24,8 @@ public class VariableDeclarationStatement implements StatementInterface{
         }
         return null;
     }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        typeEnvironment.update(name,type);
+        return typeEnvironment;
+    }
 }

@@ -39,4 +39,11 @@ public class openReadFile implements StatementInterface {
             throw new MyException("This is not a StringType (in openReadFile("+expression+"))");
         return null;
     }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        Type typeExpression=expression.typecheck(typeEnvironment);
+        if(typeExpression.equals(new StringType()))
+            return typeEnvironment;
+        else
+            throw new MyException(this.toString()+": the argument specified is not of StringType");
+    }
 }

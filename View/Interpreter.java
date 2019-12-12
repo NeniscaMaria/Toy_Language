@@ -199,6 +199,21 @@ class Interpreter {
         ProgramState program11 = new ProgramState(example11);
         RepositoryInterface repo11 = new Repository(program11, "l11.txt");
         Controller controller11 = new Controller(repo11);
+        //example to check the typechecker
+        //bool a;
+        // a= 2<3;
+        //bool b;
+        // b= 5<hello;
+        //if(hello) then print(5) else print(6)
+        StatementInterface example12=new CompoundStatement(new VariableDeclarationStatement("a",new BoolType()),
+                new CompoundStatement(new AssignmentStatement("a",new RelationalExpression(new ValueExpression(new IntValue(2)),new ValueExpression(new IntValue(3)),"<")),
+                        new CompoundStatement(new VariableDeclarationStatement("b",new BoolType()),
+                                new CompoundStatement(new AssignmentStatement("b", new RelationalExpression(new ValueExpression(new IntValue(5)),new ValueExpression(new StringValue("hello")),"<")),
+                                        new IfStatement(new ValueExpression(new StringValue("hello")),
+                                                new PrintStatement(new ValueExpression(new IntValue(5))),new PrintStatement(new ValueExpression(new IntValue(6))))))));
+        ProgramState program12 = new ProgramState(example12);
+        RepositoryInterface repo12 = new Repository(program12, "l12.txt");
+        Controller controller12 = new Controller(repo12);
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", example1.toString(), controller1));
@@ -212,6 +227,7 @@ class Interpreter {
         menu.addCommand(new RunExample("9", example9.toString(), controller9));
         menu.addCommand(new RunExample("10", example10.toString(), controller10));
         menu.addCommand(new RunExample("11", example11.toString(), controller11));
+        menu.addCommand(new RunExample("12", example12.toString(), controller12));
         menu.show();
     }
 }

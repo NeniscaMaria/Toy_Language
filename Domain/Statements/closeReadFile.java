@@ -1,12 +1,11 @@
 package Domain.Statements;
 import Domain.ProgramState.ProgramState;
+import Domain.Types.ReferenceType;
 import Domain.Types.StringType;
 import Domain.Values.StringValue;
 import Exceptions.MyException;
-import Interfaces.ExpressionInterface;
-import Interfaces.MyDictionaryInterface;
-import Interfaces.StatementInterface;
-import Interfaces.Value;
+import Interfaces.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 /*
@@ -41,5 +40,12 @@ public class closeReadFile implements StatementInterface {
         }else
             throw new MyException(expression+" does not evaluate as a StringType");
         return null;
+    }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        Type typeExpression=expression.typecheck(typeEnvironment);
+        if(typeExpression.equals(new StringType()))
+            return typeEnvironment;
+        else
+            throw new MyException(this.toString()+": the argument is not of StringType");
     }
 }

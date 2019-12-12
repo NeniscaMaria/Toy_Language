@@ -30,6 +30,14 @@ public class AssignmentStatement implements StatementInterface{
         }else
             throw new MyException("the used variable "+id+" was not declared before");
         return null;
-        }
+    }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        Type typeVariable=typeEnvironment.lookup(id);
+        Type typeExpression=expression.typecheck(typeEnvironment);
+        if(typeVariable.equals(typeExpression))
+            return typeEnvironment;
+        else
+            throw new MyException(this.toString()+": right hand side and left hand side of the assignment have different types");
+    }
 }
 

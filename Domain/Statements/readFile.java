@@ -5,10 +5,8 @@ import Domain.Types.StringType;
 import Domain.Values.IntValue;
 import Domain.Values.StringValue;
 import Exceptions.MyException;
-import Interfaces.ExpressionInterface;
-import Interfaces.MyDictionaryInterface;
-import Interfaces.StatementInterface;
-import Interfaces.Value;
+import Interfaces.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -56,5 +54,16 @@ public class readFile implements StatementInterface {
             throw new MyException(variableName+" is not defined");
         }
         return null;
+    }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        Type typeVariable=typeEnvironment.lookup(variableName);
+        Type typeExpression=expression.typecheck(typeEnvironment);
+        if(typeVariable.equals(new IntType()))
+            if(typeExpression.equals(new StringType()))
+                return typeEnvironment;
+            else
+                throw new MyException(this.toString()+" the first argument is not of StringType");
+        else
+            throw new MyException(this.toString()+": the second argument is not of IntType");
     }
 }

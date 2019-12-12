@@ -15,4 +15,9 @@ public class PrintStatement implements StatementInterface{
         output.add(exp.evaluate(state.getSymbolTable(),state.getHeap()));
         return null;
     }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        exp.typecheck(typeEnvironment);//we need to check only if the expression has all the types correct
+        //because print can receive any type
+        return typeEnvironment;
+    }
 }

@@ -31,6 +31,9 @@ public class ProgramState {
         nextID+=1;
         return copy;
     }
+    public void typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        originalProgram.typecheck(typeEnvironment);
+    }
     public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,
                         MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser,
                         HeapInterface heapFromUser){

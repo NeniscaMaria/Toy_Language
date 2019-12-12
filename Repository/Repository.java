@@ -1,7 +1,9 @@
 package Repository;
 import Domain.ProgramState.ProgramState;
 import Exceptions.MyException;
+import Interfaces.MyDictionaryInterface;
 import Interfaces.RepositoryInterface;
+import Interfaces.Type;
 
 import java.io.*;
 import java.nio.Buffer;
@@ -15,6 +17,10 @@ public class Repository implements RepositoryInterface {
         s.add(stateFromUser);
         logFilePath=logFilePathFromUser;
         states=s;
+    }
+    public void typecheck(MyDictionaryInterface<String, Type> typeEnvironment){
+        for(ProgramState state: states)
+            state.typecheck(typeEnvironment);
     }
     public List<ProgramState> getProgramsList(){
         return states;

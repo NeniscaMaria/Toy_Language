@@ -14,4 +14,7 @@ public class VariableExpression implements ExpressionInterface{
     public String toString(){
         return id;
     }
+    public Type typecheck (MyDictionaryInterface<String,Type> typeEnvironment){
+        return typeEnvironment.lookup(id);
+    }
 }

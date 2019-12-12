@@ -34,4 +34,12 @@ public class While implements StatementInterface {
             throw new MyException(condition+" does not evaluate as boolean");
         return null;
     }
+    public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
+        Type typeCondition=condition.typecheck(typeEnvironment);
+        if(typeCondition.equals(new BoolType())){
+            statement.typecheck(typeEnvironment.clone());
+            return typeEnvironment;
+        }else
+            throw new MyException("The condition "+condition.toString()+" of WHILE does not have BoolType");
+    }
 }

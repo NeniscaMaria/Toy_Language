@@ -13,6 +13,7 @@ public class RunExample extends Command {
     @Override
     public void execute() {
         try{
+            controller.typecheck();
             controller.allStepExecution();
         }
         catch (MyException | IOException e){
