@@ -1,5 +1,4 @@
 package Domain.Expressions;
-import Domain.Values.BoolValue;
 import Interfaces.*;
 import Domain.Types.IntType;
 import Domain.Values.IntValue;
@@ -33,32 +32,27 @@ public class ArithmeticExpression implements ExpressionInterface{
     public Value evaluate(MyDictionaryInterface<String,Value> table, HeapInterface<Integer,Value> heap) {
         Value v1,v2;
         v1= expression1.evaluate(table,heap);
-        if (v1.getType().equals(new IntType())) {
-            v2 = expression2.evaluate(table,heap);
-            if (v2.getType().equals(new IntType())) {
-                IntValue i1 = (IntValue)v1;
-                IntValue i2 = (IntValue)v2;
-                int n1,n2;
-                n1= i1.getValue();
-                n2 = i2.getValue();
-                switch(operation){
-                    case 1:
-                        return new IntValue(n1+n2);
-                    case 2:
-                        return new IntValue(n1-n2);
-                    case 3:
-                        return new IntValue(n1*n2);
-                    case 4:
-                        if(n2==0)
-                            throw new MyException("division by zero");
-                        else
-                            return new IntValue(n1/n2);
-                    default: throw new MyException("Wrong operation");
-                }
-            }else
-                throw new MyException("second operand is not an integer");
-        }else
-            throw new MyException("first operand is not an integer");
+        v2 = expression2.evaluate(table,heap);
+        IntValue i1 = (IntValue)v1;
+        IntValue i2 = (IntValue)v2;
+        int n1,n2;
+        n1= i1.getValue();
+        n2 = i2.getValue();
+        switch(operation) {
+            case 1:
+                return new IntValue(n1 + n2);
+            case 2:
+                return new IntValue(n1 - n2);
+            case 3:
+                return new IntValue(n1 * n2);
+            case 4:
+                if (n2 == 0)
+                    throw new MyException("division by zero");
+                else
+                    return new IntValue(n1 / n2);
+            default:
+                throw new MyException("Wrong operation");
+        }
     }
     @Override
     public String toString(){

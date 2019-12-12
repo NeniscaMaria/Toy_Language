@@ -23,10 +23,7 @@ public class AssignmentStatement implements StatementInterface{
         if (symbolsTable.isDefined(id)){
             Value val = expression.evaluate(symbolsTable,state.getHeap());
             Type typeID = (symbolsTable.getValue(id)).getType();
-            if (val.getType().equals(typeID))
-                symbolsTable.update(id, val);
-            else
-                throw new MyException("declared type of variable " + id + " and type of the assigned expression do not match");
+            symbolsTable.update(id, val);
         }else
             throw new MyException("the used variable "+id+" was not declared before");
         return null;

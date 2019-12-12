@@ -22,16 +22,13 @@ public class While implements StatementInterface {
         HeapInterface heap =state.getHeap();
         MyStackInterface<StatementInterface> stack=state.getStack();
         Value val = condition.evaluate(table,heap);
-        if(val.getType().equals(new BoolType())){
-            BoolValue cond = (BoolValue)val;
-            if(!cond.getValue()){
-                return state;
-            }else{
-                stack.push(this);
-                stack.push(statement);
-            }
-        }else
-            throw new MyException(condition+" does not evaluate as boolean");
+        BoolValue cond = (BoolValue)val;
+        if(!cond.getValue()){
+            return state;
+        }else{
+            stack.push(this);
+            stack.push(statement);
+        }
         return null;
     }
     public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){

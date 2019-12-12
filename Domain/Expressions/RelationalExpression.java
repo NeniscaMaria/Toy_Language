@@ -21,31 +21,25 @@ public class RelationalExpression implements ExpressionInterface {
     }
     public Value evaluate(MyDictionaryInterface<String,Value> table, HeapInterface<Integer,Value> heap){
         Value value1 = expression1.evaluate(table,heap);
-        if(value1.getType().equals(new IntType())){
-            IntValue v1 = (IntValue) value1;
-            Value value2 = expression2.evaluate(table,heap);
-            if(value2.getType().equals(new IntType())){
-                IntValue v2 = (IntValue) value2;
-                switch(relation){
-                    case "<":
-                        return new BoolValue(v1.getValue()<v2.getValue());
-                    case "<=":
-                        return new BoolValue(v1.getValue()<=v2.getValue());
-                    case "==":
-                        return new BoolValue(v1.getValue()==v2.getValue());
-                    case "!=":
-                        return new BoolValue(v1.getValue()!=v2.getValue());
-                    case ">":
-                        return new BoolValue(v1.getValue()>v2.getValue());
-                    case ">=":
-                        return new BoolValue(v1.getValue()>=v2.getValue());
-                    default:
-                        throw new MyException(relation+" is not a supported relation in "+toString());
-                }
-            }else
-                throw new MyException(toString()+": Second expression does not evaluate as an int expression");
-        }else
-            throw new MyException(toString()+": First expression does not evaluate as an int expression");
+        IntValue v1 = (IntValue) value1;
+        Value value2 = expression2.evaluate(table,heap);
+        IntValue v2 = (IntValue) value2;
+        switch(relation) {
+            case "<":
+                return new BoolValue(v1.getValue() < v2.getValue());
+            case "<=":
+                return new BoolValue(v1.getValue() <= v2.getValue());
+            case "==":
+                return new BoolValue(v1.getValue() == v2.getValue());
+            case "!=":
+                return new BoolValue(v1.getValue() != v2.getValue());
+            case ">":
+                return new BoolValue(v1.getValue() > v2.getValue());
+            case ">=":
+                return new BoolValue(v1.getValue() >= v2.getValue());
+            default:
+                throw new MyException(relation + " is not a supported relation in " + toString());
+        }
     }
     public Type typecheck (MyDictionaryInterface<String,Type> typeEnvironment){
         Type type1,type2;

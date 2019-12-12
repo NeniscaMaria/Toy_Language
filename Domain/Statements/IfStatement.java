@@ -22,14 +22,10 @@ public class IfStatement implements StatementInterface{
     public ProgramState execute(ProgramState state){
         MyStackInterface<StatementInterface> stack = state.getStack();
         Value condition = expression.evaluate(state.getSymbolTable(),state.getHeap());
-        if(!condition.getType().equals(new BoolType())){
-            throw new MyException("Conditional expression is not a boolean");
-        }else{
-            if(condition.isEqual(new BoolValue(true)))
-                stack.push(thenStatement);
-            else
-                stack.push(elseStatement);
-        }
+        if(condition.isEqual(new BoolValue(true)))
+            stack.push(thenStatement);
+        else
+            stack.push(elseStatement);
         return null;
     }
     public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){

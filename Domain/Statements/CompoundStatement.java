@@ -14,7 +14,6 @@ public class CompoundStatement implements StatementInterface{
         second=secondFromUser;
     }
 
-
     @Override
     public String toString(){
         return "("+first.toString()+";"+second.toString()+")";

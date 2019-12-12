@@ -23,22 +23,18 @@ public class closeReadFile implements StatementInterface {
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String, Value> symbolTable=state.getSymbolTable();
         Value val=expression.evaluate(symbolTable,state.getHeap());
-        if(val.getType().equals(new StringType())){
-            StringValue id = (StringValue)val;
-            MyDictionaryInterface<StringValue, BufferedReader> fileTable=state.getFileTable();
-            if(fileTable.isDefined(id)) {
-                try {
-                    BufferedReader descriptor = fileTable.getValue(id);
-                    descriptor.close();
-                    fileTable.delete(id);
-                }catch (IOException e){
-                    throw new MyException(e.getMessage());
-                }
-            }else
-                throw new MyException(id+" is not defined in the FileTable");
-
+        StringValue id = (StringValue)val;
+        MyDictionaryInterface<StringValue, BufferedReader> fileTable=state.getFileTable();
+        if(fileTable.isDefined(id)) {
+            try {
+                BufferedReader descriptor = fileTable.getValue(id);
+                descriptor.close();
+                fileTable.delete(id);
+            }catch (IOException e){
+                throw new MyException(e.getMessage());
+            }
         }else
-            throw new MyException(expression+" does not evaluate as a StringType");
+                throw new MyException(id+" is not defined in the FileTable");
         return null;
     }
     public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
