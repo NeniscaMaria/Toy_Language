@@ -1,4 +1,5 @@
 package Domain.ProgramState;
+import Domain.TypeChecker;
 import Domain.Values.StringValue;
 import Exceptions.MyException;
 import Interfaces.*;
@@ -16,6 +17,7 @@ public class ProgramState {
     private StatementInterface originalProgram;
     private MyDictionaryInterface<StringValue,BufferedReader> fileTable;
     private HeapInterface heap;
+    private TypeChecker typeEnvironment;
     private static int nextID;
     private int ID;
     @Override
@@ -31,8 +33,9 @@ public class ProgramState {
         nextID+=1;
         return copy;
     }
-    public void typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
-        originalProgram.typecheck(typeEnvironment);
+    public void typecheck(){
+        originalProgram.typecheck(this.typeEnvironment);
+        System.out.println(typeEnvironment);
     }
     public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,
                         MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser,
@@ -47,6 +50,7 @@ public class ProgramState {
         heap=heapFromUser;
         nextID=0;
         ID=generateNewID();
+        typeEnvironment=new TypeChecker();
 
     }
     public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,
@@ -62,6 +66,7 @@ public class ProgramState {
         heap=heapFromUser;
         ID=idFromUser;
         nextID=idFromUser+1;
+        typeEnvironment=new TypeChecker();
     }
     public ProgramState(StatementInterface programFromUser){
         originalProgram=programFromUser;
@@ -73,6 +78,7 @@ public class ProgramState {
         heap=new Heap();
         ID=1;
         nextID=2;
+        typeEnvironment=new TypeChecker();
     }
 
     public ProgramState oneStepExecution() throws MyException, IOException {
@@ -98,5 +104,6 @@ public class ProgramState {
         return fileTable;
     }
     public HeapInterface getHeap(){return heap;}
+    public TypeChecker getTypeChecker(){return typeEnvironment;}
 }
 

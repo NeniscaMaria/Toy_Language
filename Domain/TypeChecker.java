@@ -1,19 +1,17 @@
 package Domain;
 
-import Domain.ProgramState.SymbolTable;
 import Exceptions.MyException;
 import Interfaces.MyDictionaryInterface;
 import Interfaces.Type;
-import Interfaces.Value;
-
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TypeChecker implements MyDictionaryInterface<String , Type> {
-    private HashMap<String, Type> table;
+    private ConcurrentHashMap<String, Type> table;
     public TypeChecker(){
-        table=new HashMap<String,Type>();
+        table=new ConcurrentHashMap<>();
     }
-    public TypeChecker(HashMap<String,Type> typeEnvironment){
+    public TypeChecker(ConcurrentHashMap<String,Type> typeEnvironment){
         table=typeEnvironment;
     }
     public boolean isDefined(String id){
@@ -36,16 +34,16 @@ public class TypeChecker implements MyDictionaryInterface<String , Type> {
     }
     @Override
     public String toString(){
-        StringBuilder result= new StringBuilder("Symbol table:"+System.lineSeparator());
+        StringBuilder result= new StringBuilder("Type Environment:"+System.lineSeparator());
         for(String key:table.keySet())
             result.append(key).append("-->").append(table.get(key).toString()).append(System.lineSeparator());
         return result.toString();
     }
-    public HashMap<String,Type> getContent(){
+    public ConcurrentHashMap<String,Type> getContent(){
         return table;
     }
     public MyDictionaryInterface<String,Type> clone(){
-        HashMap<String,Type> clone = new HashMap<String,Type>();
+        ConcurrentHashMap<String,Type> clone = new ConcurrentHashMap<>();
         for(String key : table.keySet())
             clone.put(key, table.get(key));
         return new TypeChecker(clone);

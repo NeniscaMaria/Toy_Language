@@ -5,14 +5,9 @@ import Domain.ProgramState.*;
 import Domain.Types.*;
 import Domain.Values.*;
 import Controller.Controller;
-import Exceptions.MyException;
 import Interfaces.RepositoryInterface;
 import Interfaces.StatementInterface;
-import Interfaces.Value;
 import Repository.Repository;
-
-import javax.swing.plaf.nimbus.State;
-import java.io.IOException;
 import java.util.Scanner;
 
 /*
@@ -21,7 +16,6 @@ when concurrent
 2)synchronize heapttable (read write)
  */
 class Interpreter {
-
     public static void main(String[] args) {
         System.out.println("Input the log file for example1: ");
         Scanner scanner=new Scanner(System.in);

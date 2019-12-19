@@ -5,11 +5,13 @@ import Interfaces.MyDictionaryInterface;
 
 import java.io.BufferedReader;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FileTable implements MyDictionaryInterface<StringValue,BufferedReader> {
-    HashMap<StringValue, BufferedReader> fileTable;
+    ConcurrentHashMap<StringValue, BufferedReader> fileTable;
     public FileTable(){
-        fileTable=new HashMap<StringValue, BufferedReader>();
+        fileTable=new ConcurrentHashMap<>();
     }
     public void update(StringValue id, BufferedReader val){
         fileTable.put(id,val);
@@ -37,7 +39,7 @@ public class FileTable implements MyDictionaryInterface<StringValue,BufferedRead
         }
         return result.toString();
     }
-    public HashMap<StringValue,BufferedReader> getContent(){
+    public ConcurrentHashMap<StringValue, BufferedReader> getContent(){
         return fileTable;
     }
     public MyDictionaryInterface<StringValue,BufferedReader> clone(){

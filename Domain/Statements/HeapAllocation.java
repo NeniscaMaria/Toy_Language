@@ -40,6 +40,6 @@ public class HeapAllocation implements StatementInterface {
         if(typeVariable.equals(new ReferenceType(typeExpression)))
             return typeEnvironment;
         else
-            throw new MyException(this.toString()+": right hand side and left hand side of have different types");
+            throw new MyException(this.toString()+": right hand side and left hand side have different types");
     }
 }

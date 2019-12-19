@@ -13,5 +13,5 @@ public interface RepositoryInterface {
     List<ProgramState> getProgramsList();
     void setProgramsList(List<ProgramState> listFromUser);
     void logProgramStatesExecution();
-    void typecheck(MyDictionaryInterface<String, Type> typeEnvironment);
+    void typecheck();
 }

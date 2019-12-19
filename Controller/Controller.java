@@ -23,8 +23,7 @@ public class Controller implements ControllerInterface {
         repository=repositoryFromUser;
     }
     public void typecheck(){
-        MyDictionaryInterface<String,Type> typeEnvironment=new TypeChecker();
-        repository.typecheck(typeEnvironment);
+        repository.typecheck();
     }
 
     private List<ProgramState> removeCompletedPrograms(List<ProgramState> programListFromUser){

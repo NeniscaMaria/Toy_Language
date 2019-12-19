@@ -6,15 +6,17 @@ import Interfaces.MyDictionaryInterface;
 import Interfaces.Type;
 import Interfaces.Value;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 
 public class SymbolTable implements MyDictionaryInterface<String,Value>{
-    private HashMap<String,Value> table;
+    private ConcurrentHashMap<String,Value> table;
     public SymbolTable(){
-        table=new HashMap<String,Value>();
+        table=new ConcurrentHashMap<>();
     }
-    private SymbolTable(HashMap<String,Value> valuesFromUser){
+    private SymbolTable(ConcurrentHashMap<String,Value> valuesFromUser){
         table=valuesFromUser;
     }
     public boolean isDefined(String id){
@@ -42,11 +44,11 @@ public class SymbolTable implements MyDictionaryInterface<String,Value>{
             result.append(key).append("-->").append(table.get(key).toString()).append(System.lineSeparator());
         return result.toString();
     }
-    public HashMap<String,Value> getContent(){
+    public ConcurrentHashMap<String,Value> getContent(){
         return table;
     }
     public MyDictionaryInterface<String,Value> clone(){
-        HashMap<String,Value> clone = new HashMap<String,Value>();
+        ConcurrentHashMap<String,Value> clone = new ConcurrentHashMap<>();
         for(String key : table.keySet())
             clone.put(key, table.get(key));
         return new SymbolTable(clone);

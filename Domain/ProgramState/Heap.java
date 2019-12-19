@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Heap implements HeapInterface<Integer,Value> {
     private Map<Integer, Value> heap;
-    private int latestAddress;
+    private AtomicInteger latestAddress;
     public Heap(){
         heap = new ConcurrentHashMap<Integer, Value>();
-        latestAddress=0;
+        latestAddress=new AtomicInteger(0);
     }
     @Override
     public String toString(){
@@ -25,14 +26,14 @@ public class Heap implements HeapInterface<Integer,Value> {
         }
         return result.toString();
     }
-    private int generateNewAddress(){
-        latestAddress+=1;
+    private AtomicInteger generateNewAddress(){
+        latestAddress.getAndIncrement();
         return latestAddress;
     }
     public int add(Value valueFromUser){
-        int newAddress=generateNewAddress();
-        heap.put(newAddress,valueFromUser);
-        return newAddress;
+        AtomicInteger newAddress=generateNewAddress();
+        heap.put(newAddress.get(),valueFromUser);
+        return newAddress.get();
     }
     public  Value getValue(Integer addressFromUser){
         if(heap.containsKey(addressFromUser)){
