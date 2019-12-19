@@ -37,8 +37,7 @@ public class Heap implements HeapInterface<Integer,Value> {
     }
     public  Value getValue(Integer addressFromUser){
         if(heap.containsKey(addressFromUser)){
-            Value value = heap.get(addressFromUser);
-            return value;
+            return heap.get(addressFromUser);
         }else
             throw new MyException(addressFromUser+" is not a valid address in the heap");
     }

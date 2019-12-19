@@ -1,8 +1,5 @@
 package Domain.Statements;
 import Domain.ProgramState.ProgramState;
-import Domain.Types.IntType;
-import Domain.Types.StringType;
-import Exceptions.MyException;
 import Interfaces.MyDictionaryInterface;
 import Interfaces.StatementInterface;
 import Interfaces.Type;

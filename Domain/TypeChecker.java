@@ -3,7 +3,6 @@ package Domain;
 import Exceptions.MyException;
 import Interfaces.MyDictionaryInterface;
 import Interfaces.Type;
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TypeChecker implements MyDictionaryInterface<String , Type> {
@@ -11,7 +10,7 @@ public class TypeChecker implements MyDictionaryInterface<String , Type> {
     public TypeChecker(){
         table=new ConcurrentHashMap<>();
     }
-    public TypeChecker(ConcurrentHashMap<String,Type> typeEnvironment){
+    public TypeChecker(ConcurrentHashMap<String, Type> typeEnvironment){
         table=typeEnvironment;
     }
     public boolean isDefined(String id){

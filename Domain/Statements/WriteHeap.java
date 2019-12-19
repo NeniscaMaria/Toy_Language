@@ -5,7 +5,6 @@ import Domain.Types.ReferenceType;
 import Domain.Values.ReferenceValue;
 import Exceptions.MyException;
 import Interfaces.*;
-import org.w3c.dom.events.MutationEvent;
 
 public class WriteHeap implements StatementInterface {
     private String variableName; //-->contains the heap address

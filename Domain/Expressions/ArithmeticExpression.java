@@ -26,7 +26,7 @@ public class ArithmeticExpression implements ExpressionInterface{
                 operation = 4;
                 break;
             default:
-                throw new MyException("Invalid operation in ArthmeticExpression constructor\n");
+                throw new MyException("Invalid operation in ArithmeticExpression constructor\n");
         }
     }
     public Value evaluate(MyDictionaryInterface<String,Value> table, HeapInterface<Integer,Value> heap) {
@@ -47,11 +47,11 @@ public class ArithmeticExpression implements ExpressionInterface{
                 return new IntValue(n1 * n2);
             case 4:
                 if (n2 == 0)
-                    throw new MyException("division by zero");
+                    throw new MyException(this.toString()+": division by zero");
                 else
                     return new IntValue(n1 / n2);
             default:
-                throw new MyException("Wrong operation");
+                throw new MyException(this.toString()+": wrong operation");
         }
     }
     @Override

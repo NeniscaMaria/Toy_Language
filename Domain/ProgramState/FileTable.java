@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FileTable implements MyDictionaryInterface<StringValue,BufferedReader> {
-    ConcurrentHashMap<StringValue, BufferedReader> fileTable;
+    private ConcurrentHashMap<StringValue, BufferedReader> fileTable;
     public FileTable(){
         fileTable=new ConcurrentHashMap<>();
     }
@@ -43,8 +43,6 @@ public class FileTable implements MyDictionaryInterface<StringValue,BufferedRead
         return fileTable;
     }
     public MyDictionaryInterface<StringValue,BufferedReader> clone(){
-        MyDictionaryInterface<StringValue,BufferedReader> deepCopy=new FileTable();
-        //TODO
-        return deepCopy;
+        return new FileTable();
     }
 }

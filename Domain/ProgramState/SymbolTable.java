@@ -1,14 +1,8 @@
 package Domain.ProgramState;
-import Domain.Types.ReferenceType;
-import Domain.Values.ReferenceValue;
 import Exceptions.MyException;
 import Interfaces.MyDictionaryInterface;
-import Interfaces.Type;
 import Interfaces.Value;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 
 public class SymbolTable implements MyDictionaryInterface<String,Value>{

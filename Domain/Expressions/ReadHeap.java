@@ -20,8 +20,7 @@ public class ReadHeap implements ExpressionInterface {
         if(value instanceof ReferenceValue){
             ReferenceValue valueOfExpression = (ReferenceValue)value;
             int address=valueOfExpression.getAddress();
-            Value valueFromHeap=heap.getValue(address); //the getValue will throw a runtime exception if the address does not exist, so we needn't worry about that here
-            return valueFromHeap;
+            return heap.getValue(address); //the getValue will throw a runtime exception if the address does not exist, so we needn't worry about that here
         }else
             throw new MyException(expression.toString()+" does not evaluate as a ReferenceValue");
     }
