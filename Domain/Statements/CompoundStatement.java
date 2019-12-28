@@ -18,6 +18,9 @@ public class CompoundStatement implements StatementInterface{
     public String toString(){
         return "("+first.toString()+";"+second.toString()+")";
     }
+    public String getText(){
+        return first.getText()+second.getText();
+    }
 
     public ProgramState execute(@NotNull ProgramState state){
         MyStackInterface<StatementInterface> stack = state.getStack();

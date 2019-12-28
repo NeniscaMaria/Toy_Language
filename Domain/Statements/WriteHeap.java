@@ -17,6 +17,9 @@ public class WriteHeap implements StatementInterface {
     public String toString(){
         return "wH("+variableName+","+expression.toString()+")";
     }
+    public String getText(){
+        return System.lineSeparator()+"wH("+variableName+","+expression.toString()+")";
+    }
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String, Value> symbolTable=state.getSymbolTable();
         HeapInterface<Integer,Value> heap=state.getHeap();

@@ -5,6 +5,8 @@ import Domain.Values.BoolValue;
 import Exceptions.MyException;
 import Interfaces.*;
 
+import javax.print.DocFlavor;
+
 public class IfStatement implements StatementInterface{
     private ExpressionInterface expression;
     private StatementInterface thenStatement;
@@ -18,6 +20,9 @@ public class IfStatement implements StatementInterface{
     @Override
     public String toString(){
         return "IF( "+expression.toString()+" )THEN"+System.lineSeparator()+"\t( "+thenStatement.toString()+" )ELSE"+System.lineSeparator()+"\t( "+elseStatement.toString()+" )";
+    }
+    public String getText(){
+        return System.lineSeparator()+"IF( "+expression.toString()+" )THEN"+System.lineSeparator()+"\t "+thenStatement.toString()+" ELSE "+System.lineSeparator()+"\t "+elseStatement.toString()+" ";
     }
     public ProgramState execute(ProgramState state){
         MyStackInterface<StatementInterface> stack = state.getStack();

@@ -4,6 +4,8 @@ import Domain.Types.StringType;
 import Domain.Values.StringValue;
 import Exceptions.MyException;
 import Interfaces.*;
+import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,6 +19,9 @@ public class openReadFile implements StatementInterface {
     @Override
     public String toString(){
         return "openReadFile("+expression.toString()+")";
+    }
+    public String getText(){
+        return System.lineSeparator()+ "openReadFile("+expression.toString()+")";
     }
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String,Value> table = state.getSymbolTable();

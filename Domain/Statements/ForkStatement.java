@@ -15,6 +15,9 @@ public class ForkStatement implements StatementInterface {
     public String toString(){
         return "fork("+statement+")";
     }
+    public String getText(){
+        return System.lineSeparator()+"fork("+statement.getText()+")";
+    }
     public ProgramState execute(ProgramState state){
         return new ProgramState(new ExecutionStack(), state.getSymbolTable().clone(),state.getOutput(),
                     statement,state.getFileTable(),state.getHeap(),state.generateNewID());

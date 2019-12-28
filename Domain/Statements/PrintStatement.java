@@ -10,6 +10,9 @@ public class PrintStatement implements StatementInterface{
     public String toString() {
         return "print("+exp.toString()+")";
     }
+    public String getText() {
+        return System.lineSeparator()+"print("+exp.toString()+")";
+    }
     public ProgramState execute(@NotNull ProgramState state){
         MyListInterface<Value> output = state.getOutput();
         output.add(exp.evaluate(state.getSymbolTable(),state.getHeap()));

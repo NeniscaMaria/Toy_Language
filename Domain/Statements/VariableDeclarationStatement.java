@@ -14,6 +14,9 @@ public class VariableDeclarationStatement implements StatementInterface{
     public String toString(){
         return type.toString()+" "+name;
     }
+    public String getText(){
+        return System.lineSeparator()+type.toString()+" "+name;
+    }
     public ProgramState execute(ProgramState state){
         MyStackInterface<StatementInterface> stack=state.getStack();
         MyDictionaryInterface<String,Value> symbolTable=state.getSymbolTable();

@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane prefHeight="975.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ControllerGUI">
    <children>
       <GridPane layoutX="14.0" prefHeight="957.0" prefWidth="979.0">
@@ -29,13 +28,13 @@
           <RowConstraints maxHeight="435.0" minHeight="0.0" prefHeight="387.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="113.0" text="Run one step" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-            <ListView fx:id="examplesList" fixedCellSize="2.0" prefHeight="551.0" prefWidth="237.0" GridPane.rowIndex="1" GridPane.rowSpan="3" />
+            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#execute" prefHeight="43.0" prefWidth="113.0" text="Run one step" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <ListView fx:id="examplesList" fixedCellSize="2.0" onMouseClicked="#initializeExamplesList" prefHeight="551.0" prefWidth="237.0" style="-fx-fixed-cell-size: 225;" stylesheets="@application.css" GridPane.rowIndex="1" GridPane.rowSpan="3" />
             <Label text="Choose one to run" />
             <Label text="----&gt;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <VBox prefHeight="229.0" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Label text="No. of Program states" />
+                  <Label fx:id="label" text="No. of Program states" />
                   <TextField />
                </children>
             </VBox>

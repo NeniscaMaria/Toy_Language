@@ -21,6 +21,9 @@ public class readFile implements StatementInterface {
     public String toString(){
         return "readFile("+expression.toString()+", "+variableName+")";
     }
+    public String getText(){
+        return System.lineSeparator()+"readFile("+expression.toString()+", "+variableName+")";
+    }
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String, Value> symbolTable=state.getSymbolTable();
         if(symbolTable.isDefined(variableName)) {

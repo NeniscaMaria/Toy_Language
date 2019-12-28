@@ -17,6 +17,9 @@ public class HeapAllocation implements StatementInterface {
     public String toString(){
         return "new("+variableName+","+expression.toString()+")";
     }
+    public String getText(){
+        return System.lineSeparator()+"new("+variableName+","+expression.toString()+")";
+    }
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String, Value> table = state.getSymbolTable();
         if(table.isDefined(variableName)) {

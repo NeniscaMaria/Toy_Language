@@ -18,6 +18,9 @@ public class AssignmentStatement implements StatementInterface{
     public String toString(){
         return id+" = "+expression.toString();
     }
+    public String getText(){
+        return System.lineSeparator()+id+" = "+expression.toString();
+    }
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String,Value> symbolsTable = state.getSymbolTable();
         if (symbolsTable.isDefined(id)){

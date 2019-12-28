@@ -17,6 +17,9 @@ public class While implements StatementInterface {
     public String toString(){
         return "while("+condition.toString()+")"+System.lineSeparator()+statement.toString()+System.lineSeparator();
     }
+    public String getText(){
+        return System.lineSeparator()+"while("+condition.toString()+")"+System.lineSeparator()+"\t"+statement.toString();
+    }
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String,Value> table=state.getSymbolTable();
         HeapInterface heap =state.getHeap();

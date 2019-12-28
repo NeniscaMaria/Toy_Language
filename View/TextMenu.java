@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class TextMenu {
-    private Map<String, Command> commands;
+    private Map<Integer, Command> commands;
     public TextMenu(){
         commands=new HashMap<>();
     }
@@ -18,7 +18,7 @@ public class TextMenu {
             System.out.println(line);
         }
     }
-    public Map<String,Command> getMenu(){
+    public Map<Integer,Command> getMenu(){
         return commands;
     }
     public void show(){

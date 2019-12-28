@@ -12,6 +12,9 @@ public class NoOperationStatement implements StatementInterface{
     public String toString(){
         return "No Operation";
     }
+    public String getText(){
+        return System.lineSeparator()+"No Operation";
+    }
     public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
         return typeEnvironment;
     }

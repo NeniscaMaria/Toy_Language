@@ -20,6 +20,9 @@ public class closeReadFile implements StatementInterface {
     public String toString(){
         return "closeReadFile("+expression.toString()+")";
     }
+    public String getText(){
+        return System.lineSeparator()+"closeReadFile("+expression.toString()+")";
+    }
     public ProgramState execute(ProgramState state){
         MyDictionaryInterface<String, Value> symbolTable=state.getSymbolTable();
         Value val=expression.evaluate(symbolTable,state.getHeap());

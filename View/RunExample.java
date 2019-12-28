@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class RunExample extends Command {
     private Controller controller;
-    public RunExample(String key, String description,Controller controllerFromUser){
+    public RunExample(Integer key, String description,Controller controllerFromUser){
         super(key, description);
         this.controller=controllerFromUser;
     }

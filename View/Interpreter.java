@@ -11,32 +11,37 @@ import Repository.Repository;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import static javafx.application.Application.launch;
 
 import javafx.application.Application;
 
 public class Interpreter extends Application {
-    private TextMenu menu;
+    private static TextMenu menu;
     private ControllerGUI controller;
     public static void main(String[] args) {
         launch(args);
     }
-
+    public static TextMenu getMenu(){
+        return menu;
+    }
+    public static void setMenu(TextMenu menuFromUser){
+        menu=menuFromUser;
+    }
     @Override
     public void start(Stage primaryStage) throws IOException {
         //initialize class members
         menu=new TextMenu();
-        controller=new ControllerGUI();
-
         Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
         primaryStage.setTitle("Toy Language Interpreter");
         Scene scene = new Scene(root, 1000, 970);
-        //scene.getStylesheets().add(getClass().getResource("apllication.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         primaryStage.setScene(scene);
         populateExamplesMenu();
-        controller.initializeExamplesList(menu);
         primaryStage.show();
     }
 
@@ -212,7 +217,7 @@ public class Interpreter extends Application {
         //bool b;
         // b= 5<hello;
         //if(hello) then print(5) else print(6)
-        StatementInterface example12=new CompoundStatement(new VariableDeclarationStatement("a",new BoolType()),
+        CompoundStatement example12=new CompoundStatement(new VariableDeclarationStatement("a",new BoolType()),
                 new CompoundStatement(new AssignmentStatement("a",new RelationalExpression(new ValueExpression(new IntValue(2)),new ValueExpression(new IntValue(3)),"<")),
                         new CompoundStatement(new VariableDeclarationStatement("b",new BoolType()),
                                 new CompoundStatement(new AssignmentStatement("b", new RelationalExpression(new ValueExpression(new IntValue(5)),new ValueExpression(new StringValue("hello")),"<")),
@@ -221,19 +226,18 @@ public class Interpreter extends Application {
         ProgramState program12 = new ProgramState(example12);
         RepositoryInterface repo12 = new Repository(program12, "log12.txt");
         Controller controller12 = new Controller(repo12);
-        menu.addCommand(new ExitCommand("0", "exit"));
-        menu.addCommand(new RunExample("1", example1.toString(), controller1));
-        menu.addCommand(new RunExample("2", example2.toString(), controller2));
-        menu.addCommand(new RunExample("3", example3.toString(), controller3));
-        menu.addCommand(new RunExample("4", example4.toString(), controller4));
-        menu.addCommand(new RunExample("5", example5.toString(), controller5));
-        menu.addCommand(new RunExample("6", example6.toString(), controller6));
-        menu.addCommand(new RunExample("7", example7.toString(), controller7));
-        menu.addCommand(new RunExample("8", example8.toString(), controller8));
-        menu.addCommand(new RunExample("9", example9.toString(), controller9));
-        menu.addCommand(new RunExample("10", example10.toString(), controller10));
-        menu.addCommand(new RunExample("11", example11.toString(), controller11));
-        menu.addCommand(new RunExample("12", example12.toString(), controller12));
+        menu.addCommand(new RunExample(1, example1.getText(), controller1));
+        menu.addCommand(new RunExample(2, example2.getText(), controller2));
+        menu.addCommand(new RunExample(3, example3.getText(), controller3));
+        menu.addCommand(new RunExample(4, example4.getText(), controller4));
+        menu.addCommand(new RunExample(5, example5.getText(), controller5));
+        menu.addCommand(new RunExample(6, example6.getText(), controller6));
+        menu.addCommand(new RunExample(7, example7.getText(), controller7));
+        menu.addCommand(new RunExample(8, example8.getText(), controller8));
+        menu.addCommand(new RunExample(9, example9.getText(), controller9));
+        menu.addCommand(new RunExample(10, example10.getText(), controller10));
+        menu.addCommand(new RunExample(11, example11.getText(), controller11));
+        menu.addCommand(new RunExample(12, example12.getText(), controller12));
         //menu.show();
     }
 
