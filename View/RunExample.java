@@ -10,6 +10,9 @@ public class RunExample extends Command {
         super(key, description);
         this.controller=controllerFromUser;
     }
+    public Controller getController(){
+        return controller;
+    }
     @Override
     public void execute() {
         try{

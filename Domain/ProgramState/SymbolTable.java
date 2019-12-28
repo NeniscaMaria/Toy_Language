@@ -2,6 +2,10 @@ package Domain.ProgramState;
 import Exceptions.MyException;
 import Interfaces.MyDictionaryInterface;
 import Interfaces.Value;
+import View.TableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -21,6 +25,13 @@ public class SymbolTable implements MyDictionaryInterface<String,Value>{
     }
     public void update(String id,Value val){
         table.put(id,val);
+    }
+    public ObservableList<TableValue<String,Value>> getTableValues(){
+        ObservableList<TableValue<String,Value>> list = FXCollections.observableArrayList();
+        for(String key: table.keySet()){
+            list.add(new TableValue<String,Value>(key,table.get(key)));
+        }
+        return list;
     }
     public Value lookup(String id){
         if(isDefined(id))

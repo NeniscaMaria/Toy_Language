@@ -4,6 +4,9 @@ import Domain.Values.ReferenceValue;
 import Exceptions.MyException;
 import Interfaces.HeapInterface;
 import Interfaces.Value;
+import View.TableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,12 @@ public class Heap implements HeapInterface<Integer,Value> {
     public Heap(){
         heap = new ConcurrentHashMap<Integer, Value>();
         latestAddress=new AtomicInteger(0);
+    }
+    public ObservableList<TableValue<Integer,Value>> getHeapValues(){
+        ObservableList<TableValue<Integer,Value>> list = FXCollections.observableArrayList();
+        for(Integer key: heap.keySet())
+            list.add(new TableValue<Integer, Value>(key,heap.get(key)));
+        return list;
     }
     @Override
     public String toString(){

@@ -6,6 +6,7 @@ import Domain.TypeChecker;
 import Domain.Values.ReferenceValue;
 import Exceptions.MyException;
 import Interfaces.*;
+import Repository.Repository;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,8 +26,13 @@ public class Controller implements ControllerInterface {
     public void typecheck(){
         repository.typecheck();
     }
-
-    private List<ProgramState> removeCompletedPrograms(List<ProgramState> programListFromUser){
+    public RepositoryInterface getRepository(){
+        return repository;
+    }
+    public void setExecutor(ExecutorService executorFromUser){
+        executor=executorFromUser;
+    }
+    public List<ProgramState> removeCompletedPrograms(List<ProgramState> programListFromUser){
         return programListFromUser.stream()
                 .filter(ProgramState::isNotCompleted)
                 .collect(Collectors.toList());
@@ -44,7 +50,7 @@ public class Controller implements ControllerInterface {
                 .collect(Collectors.toList());
 
     }
-    private void oneStepForAllPrograms(List<ProgramState> programList) {
+    public void oneStepForAllPrograms(List<ProgramState> programList) {
         //prepare the list of callables fot the concurrent one step execution of the program states
         List<Callable<ProgramState>> callList = programList.stream().filter(p->!p.getStack().isEmpty())
                 .map((ProgramState p) ->
@@ -79,18 +85,18 @@ public class Controller implements ControllerInterface {
         }
     }
     public void allStepExecution() throws IOException {
-        executor= Executors.newFixedThreadPool(2);
-        List<ProgramState> programList=removeCompletedPrograms(repository.getProgramsList());
-        while(programList.size()>0){
+        executor = Executors.newFixedThreadPool(2);
+        List<ProgramState> programList = removeCompletedPrograms(repository.getProgramsList());
+        while (programList.size() > 0) {
             oneStepForAllPrograms(programList);
-            programList=removeCompletedPrograms(repository.getProgramsList());
+            programList = removeCompletedPrograms(repository.getProgramsList());
 
         }
         executor.shutdownNow();
-            //Here the repository still contains at least one Completed Prg
-            // and its List<PrgState> is not empty. Note that oneStepForAllPrg calls the method
-            //setPrgList of repository in order to change the repository
-            // update the repository state
+        //Here the repository still contains at least one Completed Prg
+        // and its List<PrgState> is not empty. Note that oneStepForAllPrg calls the method
+        //setPrgList of repository in order to change the repository
+        // update the repository state
         repository.setProgramsList(programList);
     }
     public void displayCurrentState(){

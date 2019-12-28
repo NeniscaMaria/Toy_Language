@@ -1,6 +1,9 @@
 package Domain.ProgramState;
 import Interfaces.MyStackInterface;
 import Interfaces.StatementInterface;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.Stack;
 
 public class ExecutionStack implements MyStackInterface<StatementInterface> {
@@ -28,5 +31,13 @@ public class ExecutionStack implements MyStackInterface<StatementInterface> {
             result.append(copyOfStack.pop().toString()).append(System.lineSeparator());
         }
         return result.toString();
+    }
+    public ObservableList<String> getExecutionStackItems(){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        Stack<StatementInterface> copyOfStack=(Stack<StatementInterface>)stack.clone();
+        while(!copyOfStack.isEmpty()){
+            list.add(copyOfStack.pop().toString());
+        }
+        return list;
     }
 }

@@ -3,6 +3,9 @@ package Domain;
 import Exceptions.MyException;
 import Interfaces.MyDictionaryInterface;
 import Interfaces.Type;
+import View.TableValue;
+import javafx.collections.ObservableList;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TypeChecker implements MyDictionaryInterface<String , Type> {
@@ -46,5 +49,10 @@ public class TypeChecker implements MyDictionaryInterface<String , Type> {
         for(String key : table.keySet())
             clone.put(key, table.get(key));
         return new TypeChecker(clone);
+    }
+
+    @Override
+    public ObservableList<TableValue<String, Type>> getTableValues() {
+        return null;
     }
 }

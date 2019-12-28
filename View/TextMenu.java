@@ -21,6 +21,9 @@ public class TextMenu {
     public Map<Integer,Command> getMenu(){
         return commands;
     }
+    public Command getCommand(int key){
+        return commands.get(key);
+    }
     public void show(){
         Scanner scanner=new Scanner(System.in);
         while(true){

@@ -2,6 +2,9 @@ package Domain.ProgramState;
 import Domain.Values.StringValue;
 import Exceptions.MyException;
 import Interfaces.MyDictionaryInterface;
+import View.TableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
 import java.util.HashMap;
@@ -44,5 +47,14 @@ public class FileTable implements MyDictionaryInterface<StringValue,BufferedRead
     }
     public MyDictionaryInterface<StringValue,BufferedReader> clone(){
         return new FileTable();
+    }
+
+    @Override
+    public ObservableList<TableValue<StringValue, BufferedReader>> getTableValues() {
+        ObservableList<TableValue<StringValue,BufferedReader>> list = FXCollections.observableArrayList();
+        for(StringValue key: fileTable.keySet()){
+            list.add(new TableValue<StringValue,BufferedReader>(key,fileTable.get(key)));
+        }
+        return list;
     }
 }

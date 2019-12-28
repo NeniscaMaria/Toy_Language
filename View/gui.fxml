@@ -23,8 +23,8 @@
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="539.0" minHeight="10.0" prefHeight="341.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="533.0" minHeight="10.0" prefHeight="174.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="539.0" minHeight="10.0" prefHeight="345.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="533.0" minHeight="10.0" prefHeight="188.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="435.0" minHeight="0.0" prefHeight="387.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -34,42 +34,42 @@
             <Label text="----&gt;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <VBox prefHeight="229.0" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Label fx:id="label" text="No. of Program states" />
-                  <TextField />
+                  <Label text="No. of Program states" />
+                  <TextField fx:id="noOfProgramStatesField" />
+                  <Label text="ProgramState identifiers" />
+                  <ListView fx:id="threadIDList" onMouseClicked="#displayStateOfSelectedProgramState" prefHeight="200.0" prefWidth="200.0" stylesheets="@application.css" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
                   <Label text="Heap Table" />
-                  <TableView prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="heapTableView" prefHeight="200.0" prefWidth="200.0">
                     <columns>
-                      <TableColumn prefWidth="104.0" text="Addrress" />
-                      <TableColumn prefWidth="90.0" text="Value" />
+                      <TableColumn fx:id="address" prefWidth="104.0" text="Addrress" />
+                      <TableColumn fx:id="value" prefWidth="90.0" text="Value" />
                     </columns>
                   </TableView>
                   <Label text="Output" />
-                  <ListView prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="outputList" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
                   <Label text="FileTable" />
-                  <ListView prefHeight="200.0" prefWidth="200.0" />
-                  <Label text="ProgramState identifiers" />
-                  <ListView prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="fileTable" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <children>
                   <Label text="Symbol table" />
-                  <TableView prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="symbolTableView" prefHeight="200.0" prefWidth="200.0">
                     <columns>
-                      <TableColumn prefWidth="102.0" text="Variable Name" />
-                      <TableColumn prefWidth="93.0" text="Value" />
+                      <TableColumn fx:id="name" prefWidth="102.0" text="Variable Name" />
+                      <TableColumn fx:id="variableValue" prefWidth="93.0" text="Value" />
                     </columns>
                   </TableView>
                   <Label text="ExecutionStack" />
-                  <ListView prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="executionStackList" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
          </children>
