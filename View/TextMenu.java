@@ -18,6 +18,9 @@ public class TextMenu {
             System.out.println(line);
         }
     }
+    public Map<String,Command> getMenu(){
+        return commands;
+    }
     public void show(){
         Scanner scanner=new Scanner(System.in);
         while(true){

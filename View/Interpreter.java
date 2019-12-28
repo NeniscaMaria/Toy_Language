@@ -8,18 +8,39 @@ import Controller.Controller;
 import Interfaces.RepositoryInterface;
 import Interfaces.StatementInterface;
 import Repository.Repository;
-import java.util.Scanner;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
+import static javafx.application.Application.launch;
 
-/*
-when concurrent
-1)concurrenthashmap
-2)synchronize heapttable (read write)
- */
-class Interpreter {
+import javafx.application.Application;
+
+public class Interpreter extends Application {
+    private TextMenu menu;
+    private ControllerGUI controller;
     public static void main(String[] args) {
-        System.out.println("Input the log file for example1: ");
-        Scanner scanner=new Scanner(System.in);
-        String logfile1=scanner.nextLine();
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        //initialize class members
+        menu=new TextMenu();
+        controller=new ControllerGUI();
+
+        Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
+        primaryStage.setTitle("Toy Language Interpreter");
+        Scene scene = new Scene(root, 1000, 970);
+        //scene.getStylesheets().add(getClass().getResource("apllication.css").toExternalForm());
+        primaryStage.setScene(scene);
+        populateExamplesMenu();
+        controller.initializeExamplesList(menu);
+        primaryStage.show();
+    }
+
+    public void populateExamplesMenu(){
         //example 1 int v; v=2;Print(v)
         StatementInterface printExample1 = new PrintStatement(new VariableExpression("v"));
         StatementInterface assignmentExample1 = new AssignmentStatement("v", new ValueExpression(new IntValue(2)));
@@ -27,11 +48,9 @@ class Interpreter {
         StatementInterface compoundExample1 = new CompoundStatement(printExample1, assignmentExample1);
         StatementInterface example1 = new CompoundStatement(declarationExample1, compoundExample1);
         ProgramState prg1 = new ProgramState(example1);
-        RepositoryInterface repo1 = new Repository(prg1, logfile1);
+        RepositoryInterface repo1 = new Repository(prg1, "log1.txt");
         Controller controller1 = new Controller(repo1);
 
-        System.out.println("Input the log file for example2: ");
-        String logfile2=scanner.nextLine();
         //example 2 s
         //int a;int b; a=2+3*5;b=a+1;Print(b)
         StatementInterface example2 = new CompoundStatement(new VariableDeclarationStatement("a", new IntType()),
@@ -42,11 +61,9 @@ class Interpreter {
                                 new CompoundStatement(new AssignmentStatement("b", new ArithmeticExpression("+", new VariableExpression("a"), new
                                         ValueExpression(new IntValue(1)))), new PrintStatement(new VariableExpression("b"))))));
         ProgramState program2 = new ProgramState(example2);
-        RepositoryInterface repo2 = new Repository(program2, logfile2);
+        RepositoryInterface repo2 = new Repository(program2, "log2.txt");
         Controller controller2 = new Controller(repo2);
 
-        System.out.println("Input the log file for example3: ");
-        String logfile3=scanner.nextLine();
         //example 3
         //bool a; int v; a=true;(If a Then v=2 Else v=3);Print(v)
         StatementInterface example3 = new CompoundStatement(new VariableDeclarationStatement("a", new BoolType()),
@@ -55,11 +72,9 @@ class Interpreter {
                                 new CompoundStatement(new IfStatement(new VariableExpression("a"), new AssignmentStatement("v", new ValueExpression(new IntValue(2))),
                                         new AssignmentStatement("v", new ValueExpression(new IntValue(3)))), new PrintStatement(new VariableExpression("v"))))));
         ProgramState program3 = new ProgramState(example3);
-        RepositoryInterface repo3 = new Repository(program3, logfile3);
+        RepositoryInterface repo3 = new Repository(program3, "log3.txt");
         Controller controller3 = new Controller(repo3);
 
-        System.out.println("Input the log file for example4: ");
-        String logfile4=scanner.nextLine();
         //example4
         //string varf;
         //varf="test.in";
@@ -78,11 +93,9 @@ class Interpreter {
                                                                 new CompoundStatement(new PrintStatement(new VariableExpression("varc")),
                                                                         new closeReadFile(new VariableExpression("varf"))))))))));
         ProgramState program4 = new ProgramState(example4);
-        RepositoryInterface repo4 = new Repository(program4, logfile4);
+        RepositoryInterface repo4 = new Repository(program4, "log4.txt");
         Controller controller4 = new Controller(repo4);
 
-        System.out.println("Input the log file for example5: ");
-        String logfile5=scanner.nextLine();
         //example 5
         //bool a;
         // a= 2<3;
@@ -96,7 +109,7 @@ class Interpreter {
                                         new IfStatement(new RelationalExpression(new ValueExpression(new IntValue(2)),new ValueExpression(new IntValue(3)),"!="),
                                                 new PrintStatement(new ValueExpression(new IntValue(5))),new PrintStatement(new ValueExpression(new IntValue(6))))))));
         ProgramState program5 = new ProgramState(example5);
-        RepositoryInterface repo5 = new Repository(program5, logfile5);
+        RepositoryInterface repo5 = new Repository(program5, "log4.txt");
         Controller controller5 = new Controller(repo5);
 
         //example6
@@ -111,9 +124,9 @@ class Interpreter {
                         new CompoundStatement(new VariableDeclarationStatement("a",new ReferenceType(new ReferenceType(new IntType()))),
                                 new CompoundStatement(new HeapAllocation("a",new VariableExpression("v")),
                                         new CompoundStatement(new PrintStatement(new VariableExpression("v")),
-                new PrintStatement(new VariableExpression("a")))))));
+                                                new PrintStatement(new VariableExpression("a")))))));
         ProgramState program6 = new ProgramState(example6);
-        RepositoryInterface repo6 = new Repository(program6, "l6.txt");
+        RepositoryInterface repo6 = new Repository(program6, "log6.txt");
         Controller controller6 = new Controller(repo6);
 
         //example7
@@ -130,7 +143,7 @@ class Interpreter {
                                         new CompoundStatement(new PrintStatement(new ReadHeap(new VariableExpression("v"))),
                                                 new PrintStatement(new ArithmeticExpression("+",new ReadHeap(new ReadHeap(new VariableExpression("a"))),new ValueExpression(new IntValue(5)))))))));
         ProgramState program7 = new ProgramState(example7);
-        RepositoryInterface repo7 = new Repository(program7, "l7.txt");
+        RepositoryInterface repo7 = new Repository(program7, "log7.txt");
         Controller controller7 = new Controller(repo7);
 
         //example8
@@ -145,7 +158,7 @@ class Interpreter {
                                 new CompoundStatement(new WriteHeap("v",new ValueExpression(new IntValue(30))),
                                         new PrintStatement(new ArithmeticExpression("+",new ReadHeap(new VariableExpression("v")),new ValueExpression(new IntValue(5))))))));
         ProgramState program8 = new ProgramState(example8);
-        RepositoryInterface repo8 = new Repository(program8, "l8.txt");
+        RepositoryInterface repo8 = new Repository(program8, "log8.txt");
         Controller controller8 = new Controller(repo8);
         //example9
         //Ref int v;
@@ -161,7 +174,7 @@ class Interpreter {
                                         new CompoundStatement(new HeapAllocation("v",new ValueExpression(new IntValue(30))),
                                                 new PrintStatement(new ReadHeap(new ReadHeap(new VariableExpression("a")))))))));
         ProgramState program9 = new ProgramState(example9);
-        RepositoryInterface repo9 = new Repository(program9, "l9.txt");
+        RepositoryInterface repo9 = new Repository(program9, "log9.txt");
         Controller controller9 = new Controller(repo9);
         //example10
         // int v;
@@ -173,9 +186,9 @@ class Interpreter {
                         new CompoundStatement(new While(new RelationalExpression(new VariableExpression("v"),new ValueExpression(new IntValue(0)),">"),
                                 new CompoundStatement(new PrintStatement(new VariableExpression("v")),new AssignmentStatement("v",
                                         new ArithmeticExpression("-",new VariableExpression("v"),new ValueExpression(new IntValue(1)))))),
-                        new PrintStatement(new VariableExpression("v")))));
+                                new PrintStatement(new VariableExpression("v")))));
         ProgramState program10 = new ProgramState(example10);
-        RepositoryInterface repo10 = new Repository(program10, "l10.txt");
+        RepositoryInterface repo10 = new Repository(program10, "log10.txt");
         Controller controller10 = new Controller(repo10);
         //example 11
         //int v; Ref int a; v=10;new(a,22);
@@ -191,7 +204,7 @@ class Interpreter {
                                                                 new CompoundStatement(new PrintStatement(new VariableExpression("v")), new PrintStatement(new ReadHeap(new VariableExpression("a"))))))),
                                                 new CompoundStatement(new PrintStatement(new VariableExpression("v")),new PrintStatement(new ReadHeap(new VariableExpression("a")))))))));
         ProgramState program11 = new ProgramState(example11);
-        RepositoryInterface repo11 = new Repository(program11, "l11.txt");
+        RepositoryInterface repo11 = new Repository(program11, "log11.txt");
         Controller controller11 = new Controller(repo11);
         //example to check the typechecker
         //bool a;
@@ -206,9 +219,8 @@ class Interpreter {
                                         new IfStatement(new ValueExpression(new StringValue("hello")),
                                                 new PrintStatement(new ValueExpression(new IntValue(5))),new PrintStatement(new ValueExpression(new IntValue(6))))))));
         ProgramState program12 = new ProgramState(example12);
-        RepositoryInterface repo12 = new Repository(program12, "l12.txt");
+        RepositoryInterface repo12 = new Repository(program12, "log12.txt");
         Controller controller12 = new Controller(repo12);
-        TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
         menu.addCommand(new RunExample("1", example1.toString(), controller1));
         menu.addCommand(new RunExample("2", example2.toString(), controller2));
@@ -222,7 +234,8 @@ class Interpreter {
         menu.addCommand(new RunExample("10", example10.toString(), controller10));
         menu.addCommand(new RunExample("11", example11.toString(), controller11));
         menu.addCommand(new RunExample("12", example12.toString(), controller12));
-        menu.show();
+        //menu.show();
     }
+
 }
 

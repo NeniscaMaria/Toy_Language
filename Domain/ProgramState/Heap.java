@@ -35,7 +35,7 @@ public class Heap implements HeapInterface<Integer,Value> {
         heap.put(newAddress.get(),valueFromUser);
         return newAddress.get();
     }
-    public  Value getValue(Integer addressFromUser){
+    public Value getValue(Integer addressFromUser){
         if(heap.containsKey(addressFromUser)){
             return heap.get(addressFromUser);
         }else
