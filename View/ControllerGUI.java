@@ -1,13 +1,10 @@
 package View;
 
 import Controller.Controller;
-import Domain.ProgramState.ExecutionStack;
 import Domain.ProgramState.ProgramState;
-import Domain.ProgramState.SymbolTable;
 import Domain.Values.StringValue;
 import Exceptions.MyException;
 import Interfaces.RepositoryInterface;
-import Interfaces.StatementInterface;
 import Interfaces.Value;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,10 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.BufferedReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,7 +21,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 public class ControllerGUI {
-    private ExecutorService executor;
     private Controller controllerOfCurrentExample;
     private int currentIndex;
     private List<ProgramState> programStates;
@@ -70,14 +64,6 @@ public class ControllerGUI {
     void displayStateOfSelectedProgramState(){
         int index = threadIDList.getSelectionModel().getSelectedIndex();
         ProgramState state = programStates.get(index);
-        //display heap table
-        address.setCellValueFactory(new PropertyValueFactory<TableValue<Integer,Value>,String>("name"));
-        value.setCellValueFactory(new PropertyValueFactory<TableValue<Integer,Value>,String>("value"));
-        heapTableView.setItems(state.getHeap().getHeapValues());
-        //display output
-        outputList.setItems(state.getOutput().getOutputItems());
-        //display file table
-        fileTable.setItems(getFileTableValues(state));
         //display execution stack
         executionStackList.setItems(state.getStack().getExecutionStackItems());
         //display symbol table
@@ -106,22 +92,24 @@ public class ControllerGUI {
             }
 
             //one step execution
-            executor = Executors.newFixedThreadPool(2);
+            ExecutorService executor = Executors.newFixedThreadPool(2);
             controllerOfCurrentExample.setExecutor(executor);
             RepositoryInterface repository = controllerOfCurrentExample.getRepository();
             List<ProgramState> programList = controllerOfCurrentExample.removeCompletedPrograms(repository.getProgramsList());
             if (programList.size() > 0) {
                 controllerOfCurrentExample.oneStepForAllPrograms(programList);
-                programList = controllerOfCurrentExample.removeCompletedPrograms(repository.getProgramsList());
+                //programList = controllerOfCurrentExample.removeCompletedPrograms(repository.getProgramsList());
+            }
+            if(programList.size()==0){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("Execution of this example is finished!");
+                alert.showAndWait();
             }
             executor.shutdownNow();
-            //Here the repository still contains at least one Completed Prg
-            // and its List<PrgState> is not empty. Note that oneStepForAllPrg calls the method
-            //setPrgList of repository in order to change the repository
-            // update the repository state
             repository.setProgramsList(programList);
             displayCurrentState(repository);
-            //check why it doesn;t work at last execution step (displaying)
         }catch(MyException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -142,5 +130,14 @@ public class ControllerGUI {
         }
         threadIDList.setItems(examples);
         threadIDList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        ProgramState state = programStates.get(0);
+        //display heap table
+        address.setCellValueFactory(new PropertyValueFactory<TableValue<Integer,Value>,String>("name"));
+        value.setCellValueFactory(new PropertyValueFactory<TableValue<Integer,Value>,String>("value"));
+        heapTableView.setItems(state.getHeap().getHeapValues());
+        //display output
+        outputList.setItems(state.getOutput().getOutputItems());
+        //display file table
+        fileTable.setItems(getFileTableValues(state));
     }
 }
