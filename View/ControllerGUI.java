@@ -63,13 +63,15 @@ public class ControllerGUI {
     @FXML
     void displayStateOfSelectedProgramState(){
         int index = threadIDList.getSelectionModel().getSelectedIndex();
-        ProgramState state = programStates.get(index);
-        //display execution stack
-        executionStackList.setItems(state.getStack().getExecutionStackItems());
-        //display symbol table
-        name.setCellValueFactory(new PropertyValueFactory<TableValue<String,Value>,String>("name"));
-        variableValue.setCellValueFactory(new PropertyValueFactory<TableValue<String,Value>,String>("value"));
-        symbolTableView.setItems(state.getSymbolTable().getTableValues());
+        if(index >=0) {
+            ProgramState state = programStates.get(index);
+            //display execution stack
+            executionStackList.setItems(state.getStack().getExecutionStackItems());
+            //display symbol table
+            name.setCellValueFactory(new PropertyValueFactory<TableValue<String, Value>, String>("name"));
+            variableValue.setCellValueFactory(new PropertyValueFactory<TableValue<String, Value>, String>("value"));
+            symbolTableView.setItems(state.getSymbolTable().getTableValues());
+        }
     }
     public ObservableList<String> getFileTableValues(ProgramState state) {
         Map<StringValue,BufferedReader> fileTableItems = state.getFileTable().getContent();
@@ -139,5 +141,6 @@ public class ControllerGUI {
         outputList.setItems(state.getOutput().getOutputItems());
         //display file table
         fileTable.setItems(getFileTableValues(state));
+        displayStateOfSelectedProgramState();
     }
 }
