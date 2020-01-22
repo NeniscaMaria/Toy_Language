@@ -22,7 +22,7 @@ import javafx.application.Application;
 
 public class Interpreter extends Application {
     private static TextMenu menu;
-    private ControllerGUI controller;
+    //private ControllerGUI controller;
     public static void main(String[] args) {
         launch(args);
     }
@@ -36,15 +36,34 @@ public class Interpreter extends Application {
     public void start(Stage primaryStage) throws IOException {
         //initialize class members
         menu=new TextMenu();
-        Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
+        populateExamplesMenu();
+        FXMLLoader mainLoader=new FXMLLoader();
+        mainLoader.setLocation(getClass().getResource("gui.fxml"));
+        Parent root = mainLoader.load();
         primaryStage.setTitle("Toy Language Interpreter");
         Scene scene = new Scene(root, 1000, 970);
         //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        ControllerGUI mainController = mainLoader.getController();
+
+        FXMLLoader secondLoader=new FXMLLoader();
+        secondLoader.setLocation(getClass().getResource("examplesWindow.fxml"));
+        Parent root2 = secondLoader.load();
+        primaryStage.setTitle("Examples");
+        Scene scene2 = new Scene(root2, 1000, 970);
+
         primaryStage.setScene(scene);
         populateExamplesMenu();
         primaryStage.show();
-    }
 
+        ControllerExamplesWindow exController = secondLoader.getController();
+        exController.setMainController(mainController);
+
+        Stage secondStage = new Stage();
+        secondStage.setScene(scene2);
+        secondStage.show();
+
+
+    }
     public void populateExamplesMenu(){
         //example 1 int v; v=2;Print(v)
         StatementInterface printExample1 = new PrintStatement(new VariableExpression("v"));

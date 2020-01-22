@@ -9,23 +9,23 @@ import Interfaces.Value;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
-public class ControllerGUI {
+public class ControllerGUI implements Initializable {
     private Controller controllerOfCurrentExample;
-    private int currentIndex;
     private List<ProgramState> programStates;
-    @FXML
-    private ListView<String> examplesList;
     @FXML
     private ListView<String> outputList;
     @FXML
@@ -48,18 +48,10 @@ public class ControllerGUI {
     private TableColumn<TableValue<Integer,Value>,String> address;
     @FXML
     private TableColumn<TableValue<Integer,Value>,String> value;
-    @FXML
-    void initializeExamplesList(MouseEvent event){
-        Map<Integer,Command> menu = Interpreter.getMenu().getMenu();
-        ObservableList<String> examples = FXCollections.observableArrayList();
-        for(Integer key:menu.keySet()){
-            examples.add(menu.get(key).getDescription());
-        }
-        examplesList.setItems(examples);
-        examplesList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        examplesList.getFocusModel().focus(2);
-    }
 
+    public void setControllerExecution(Controller controllerFromUser){
+        controllerOfCurrentExample=controllerFromUser;
+    }
     @FXML
     void displayStateOfSelectedProgramState(){
         int index = threadIDList.getSelectionModel().getSelectedIndex();
@@ -81,18 +73,9 @@ public class ControllerGUI {
         }
         return list;
     }
-
     @FXML
-    void execute(MouseEvent event){
-        int key = examplesList.getSelectionModel().getSelectedIndex()+1;
+    void  execute( ){
         try {
-            if (key != currentIndex) {
-                RunExample exampleToRun = (RunExample) Interpreter.getMenu().getCommand(key); //we added no exit command so we know for sure that this will be a RunExample
-                controllerOfCurrentExample = exampleToRun.getController();
-                controllerOfCurrentExample.typecheck();
-                currentIndex=key;
-            }
-
             //one step execution
             ExecutorService executor = Executors.newFixedThreadPool(2);
             controllerOfCurrentExample.setExecutor(executor);
@@ -120,11 +103,10 @@ public class ControllerGUI {
             alert.showAndWait();
         }
     }
-
     private void displayCurrentState(RepositoryInterface repository) {
         programStates = repository.getProgramsList();
         int noOfProgramStates = programStates.size();
-        noOfProgramStatesField.setText(Integer.toString(noOfProgramStates));
+        //noOfProgramStatesField.setText(Integer.toString(noOfProgramStates));
         //display program states
         ObservableList<String> examples = FXCollections.observableArrayList();
         for (ProgramState state : programStates) {
@@ -142,5 +124,10 @@ public class ControllerGUI {
         //display file table
         fileTable.setItems(getFileTableValues(state));
         displayStateOfSelectedProgramState();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }
