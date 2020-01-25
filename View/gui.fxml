@@ -51,7 +51,14 @@
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <children>
                   <Label text="FileTable" />
-                  <ListView fx:id="fileTable" prefHeight="375.0" prefWidth="404.0" />
+                  <ListView fx:id="fileTable" prefHeight="97.0" prefWidth="404.0" />
+                  <Label text="LockTable" />
+                  <TableView fx:id="lockTableView" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="location" prefWidth="75.0" text="Location" />
+                      <TableColumn fx:id="valueLocation" prefWidth="75.0" text="Value" />
+                    </columns>
+                  </TableView>
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">

@@ -3,6 +3,8 @@ import Domain.Types.ReferenceType;
 import Interfaces.Type;
 import Interfaces.Value;
 
+import java.sql.Ref;
+
 public class ReferenceValue implements Value {
     private int address;
     private Type locationType;
@@ -28,5 +30,8 @@ public class ReferenceValue implements Value {
     @Override
     public String toString(){
         return "("+Integer.toString(address)+","+locationType.toString()+")";
+    }
+    public Value clone(){
+        return new ReferenceValue(address,locationType);
     }
 }

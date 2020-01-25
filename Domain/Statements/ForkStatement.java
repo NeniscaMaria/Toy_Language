@@ -20,7 +20,7 @@ public class ForkStatement implements StatementInterface {
     }
     public ProgramState execute(ProgramState state){
         return new ProgramState(new ExecutionStack(), state.getSymbolTable().clone(),state.getOutput(),
-                    statement,state.getFileTable(),state.getHeap(),state.generateNewID());
+                    statement,state.getFileTable(),state.getHeap(),state.generateNewID().intValue(),state.getLockTable());
 
     }
     public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){

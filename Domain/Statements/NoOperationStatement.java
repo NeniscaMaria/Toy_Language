@@ -5,15 +5,25 @@ import Interfaces.StatementInterface;
 import Interfaces.Type;
 
 public class NoOperationStatement implements StatementInterface{
+    private boolean toPrint;
+    public NoOperationStatement(boolean b){
+        toPrint=b;
+    }
     public ProgramState execute(ProgramState state){
         return null;
     }
     @Override
     public String toString(){
-        return "No Operation";
+        if (toPrint)
+            return "No Operation";
+        else
+            return "";
     }
     public String getText(){
-        return System.lineSeparator()+"No Operation";
+        if(toPrint)
+            return System.lineSeparator()+"No Operation";
+        else
+            return "";
     }
     public MyDictionaryInterface<String, Type> typecheck(MyDictionaryInterface<String,Type> typeEnvironment){
         return typeEnvironment;

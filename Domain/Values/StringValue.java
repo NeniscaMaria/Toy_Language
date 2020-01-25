@@ -25,4 +25,7 @@ public class StringValue implements Value {
         StringValue v = (StringValue)valueFromUser;
         return value.equals(v.getValue());
     }
+    public Value clone(){
+        return new StringValue(value);
+    }
 }

@@ -31,7 +31,7 @@ public class Repository implements RepositoryInterface {
     public void logProgramStateExecution(ProgramState state){
         //logs the execution of a single program state (given by the user)
         try (PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) {
-            logFile.println(state);
+            logFile.println(state.toString());
             logFile.println(System.lineSeparator());
 
         } catch (IOException e) {
@@ -42,8 +42,8 @@ public class Repository implements RepositoryInterface {
         //logs the execution of all the program states currently existing in the repository
         try (PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) {
             for (ProgramState state : states) {
-                logFile.println("Thread ID " + Integer.toString(state.getID()) + System.lineSeparator() + state.getTypeChecker() +System.lineSeparator() + state.getStack().toString()
-                        + state.getSymbolTable().toString());
+                logFile.println("Thread ID " + Integer.toString(state.getID().intValue()) + System.lineSeparator() + state.getTypeChecker() +System.lineSeparator() + state.getStack().toString()
+                        + state.getSymbolTable().toString()+System.lineSeparator()+state.getLockTable());
             }
             logFile.println(states.get(0).getHeap().toString() + states.get(0).getOutput().toString());
         } catch (IOException e) {

@@ -19,7 +19,9 @@ public class BoolValue implements Value{
         }
         return false;
     }
-
+    public Value clone(){
+        return new BoolValue(value);
+    }
     public String toString(){
         return Boolean.toString(value);
     }

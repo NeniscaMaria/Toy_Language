@@ -25,4 +25,7 @@ public class IntValue implements Value{
         }
         return false;
     }
+    public Value clone(){
+        return new IntValue(value);
+    }
 }

@@ -9,7 +9,7 @@
    <children>
       <VBox layoutX="12.0" layoutY="11.0" prefHeight="479.0" prefWidth="277.0">
          <children>
-            <ListView fx:id="examplesList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#initializeExamplesList" prefHeight="800.0" prefWidth="800.0" style="-fx-fixed-cell-size: 200;" />
+            <ListView fx:id="examplesList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#initializeExamplesList" prefHeight="800.0" prefWidth="800.0" style="-fx-fixed-cell-size: 350;" />
             <Button fx:id="selectButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#execute" text="Select" />
          </children>
       </VBox>

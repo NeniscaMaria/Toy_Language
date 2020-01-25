@@ -7,6 +7,7 @@ import Repository.Repository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -18,20 +19,20 @@ public class ProgramState {
     private MyDictionaryInterface<StringValue,BufferedReader> fileTable;
     private HeapInterface heap;
     private TypeChecker typeEnvironment;
-    private static int nextID;
-    private int ID;
+    private LockInterface<Integer,Integer> lockTable;
+    private static AtomicInteger nextID;
+    private AtomicInteger ID;
     @Override
     public String toString(){
-        return "Thread ID: "+Integer.toString(ID)+System.lineSeparator()+executionStack.toString()+symbolTable.toString()
-                +output.toString()+fileTable.toString()+heap.toString();
+        return "Thread ID: "+Integer.toString(ID.intValue())+System.lineSeparator()+executionStack.toString()+symbolTable.toString()
+                +output.toString()+fileTable.toString()+heap.toString()+System.lineSeparator()+"LockTable: "+lockTable.toString();
     }
-    public int getID(){
+    public AtomicInteger getID(){
         return ID;
     }
-    public synchronized int generateNewID(){//synchronized uses a lock on the entire execution of the method
-        int copy=nextID;
-        nextID+=1;
-        return copy;
+    public synchronized AtomicInteger generateNewID(){//synchronized uses a lock on the entire execution of the method
+        int res = nextID.getAndIncrement();
+        return new AtomicInteger(res);
     }
     public void typecheck(){
         originalProgram.typecheck(this.typeEnvironment);
@@ -48,14 +49,15 @@ public class ProgramState {
         fileTable=fileTableFromUser;
         executionStack.push(programFromUser);
         heap=heapFromUser;
-        nextID=0;
+        nextID=new AtomicInteger(0);
         ID=generateNewID();
+        lockTable=new LockTable();
         typeEnvironment=new TypeChecker();
 
     }
     public ProgramState(MyStackInterface<StatementInterface> executionStackFromUser, MyDictionaryInterface<String,Value> symbolTableFromUser,
                         MyListInterface<Value> outputFromUser,StatementInterface programFromUser,MyDictionaryInterface<StringValue,BufferedReader> fileTableFromUser,
-                        HeapInterface heapFromUser,int idFromUser){
+                        HeapInterface heapFromUser,int idFromUser,LockInterface<Integer,Integer> lockTableFromUser){
         //constructor that receives thread id from user
         executionStack=executionStackFromUser;
         symbolTable=symbolTableFromUser;
@@ -64,8 +66,9 @@ public class ProgramState {
         fileTable=fileTableFromUser;
         executionStack.push(programFromUser);
         heap=heapFromUser;
-        ID=idFromUser;
-        nextID=idFromUser+1;
+        ID=new AtomicInteger(idFromUser);
+        nextID=new AtomicInteger(idFromUser+1);
+        lockTable=lockTableFromUser;
         typeEnvironment=new TypeChecker();
     }
     public ProgramState(StatementInterface programFromUser){
@@ -76,9 +79,10 @@ public class ProgramState {
         fileTable=new FileTable();
         executionStack.push(originalProgram);
         heap=new Heap();
-        ID=1;
-        nextID=2;
+        ID=new AtomicInteger(1);
+        nextID=new AtomicInteger(2);
         typeEnvironment=new TypeChecker();
+        lockTable=new LockTable();
     }
 
     public ProgramState oneStepExecution() throws MyException, IOException {
@@ -105,5 +109,6 @@ public class ProgramState {
     }
     public HeapInterface getHeap(){return heap;}
     public TypeChecker getTypeChecker(){return typeEnvironment;}
+    public LockInterface<Integer,Integer> getLockTable(){return lockTable;}
 }
 

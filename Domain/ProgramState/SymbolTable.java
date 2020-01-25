@@ -55,7 +55,7 @@ public class SymbolTable implements MyDictionaryInterface<String,Value>{
     public MyDictionaryInterface<String,Value> clone(){
         ConcurrentHashMap<String,Value> clone = new ConcurrentHashMap<>();
         for(String key : table.keySet())
-            clone.put(key, table.get(key));
+            clone.put(key, table.get(key).clone());
         return new SymbolTable(clone);
     }
 }

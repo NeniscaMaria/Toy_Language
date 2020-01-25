@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.net.URL;
 import java.util.List;
@@ -45,9 +44,15 @@ public class ControllerGUI implements Initializable {
     @FXML
     private TableView<TableValue<Integer,Value>> heapTableView;
     @FXML
+    private TableView<TableValue<Integer,Integer>> lockTableView;
+    @FXML
     private TableColumn<TableValue<Integer,Value>,String> address;
     @FXML
     private TableColumn<TableValue<Integer,Value>,String> value;
+    @FXML
+    private TableColumn<TableValue<Integer,Integer>,String> location;
+    @FXML
+    private TableColumn<TableValue<Integer,Integer>,String> valueLocation;
 
     public void setControllerExecution(Controller controllerFromUser){
         controllerOfCurrentExample=controllerFromUser;
@@ -110,7 +115,7 @@ public class ControllerGUI implements Initializable {
         //display program states
         ObservableList<String> examples = FXCollections.observableArrayList();
         for (ProgramState state : programStates) {
-            examples.add("Thread ID: "+Integer.toString(state.getID()));
+            examples.add("Thread ID: "+Integer.toString(state.getID().intValue()));
         }
         threadIDList.setItems(examples);
         threadIDList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -123,6 +128,10 @@ public class ControllerGUI implements Initializable {
         outputList.setItems(state.getOutput().getOutputItems());
         //display file table
         fileTable.setItems(getFileTableValues(state));
+        //display lock table
+        location.setCellValueFactory(new PropertyValueFactory<TableValue<Integer,Integer>,String>("name"));
+        valueLocation.setCellValueFactory(new PropertyValueFactory<TableValue<Integer,Integer>,String>("value"));
+        lockTableView.setItems(state.getLockTable().getLockValues());
         displayStateOfSelectedProgramState();
     }
 

@@ -7,7 +7,9 @@ import Domain.Values.*;
 import Controller.Controller;
 import Interfaces.RepositoryInterface;
 import Interfaces.StatementInterface;
+import Interfaces.Value;
 import Repository.Repository;
+import com.sun.javafx.stage.WindowCloseRequestHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,9 +18,16 @@ import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.ProviderNotFoundException;
+import java.util.concurrent.CompletableFuture;
+
 import static javafx.application.Application.launch;
 
 import javafx.application.Application;
+
+import javax.swing.*;
+import javax.swing.border.CompoundBorder;
 
 public class Interpreter extends Application {
     private static TextMenu menu;
@@ -245,6 +254,56 @@ public class Interpreter extends Application {
         ProgramState program12 = new ProgramState(example12);
         RepositoryInterface repo12 = new Repository(program12, "log12.txt");
         Controller controller12 = new Controller(repo12);
+
+        //example 13
+        CompoundStatement example13=new CompoundStatement(new VariableDeclarationStatement("a",new ReferenceType(new IntType())),
+                new CompoundStatement(new HeapAllocation("a",new ValueExpression(new IntValue(20))),
+                        new CompoundStatement(new ForStatement("v",
+                                        new ValueExpression(new IntValue(0)),
+                                        new RelationalExpression(new VariableExpression("v"), new ValueExpression(new IntValue(3)),"<"),
+                                        new ArithmeticExpression("+",new VariableExpression("v"),new ValueExpression(new IntValue(1))),
+                                        new ForkStatement(new CompoundStatement(new PrintStatement(new VariableExpression("v")),
+                                                new AssignmentStatement("v",new ArithmeticExpression("*",new VariableExpression("v"),new ReadHeap(new VariableExpression("a"))))))),
+                                                new CompoundStatement(new PrintStatement(new ReadHeap(new VariableExpression("a"))), new NoOperationStatement(false)))));
+        ProgramState program13 = new ProgramState(example13);
+        RepositoryInterface repo13 = new Repository(program13, "log13.txt");
+        Controller controller13 = new Controller(repo13);
+
+        //example 14
+        CompoundStatement example14 = new CompoundStatement(new VariableDeclarationStatement("v1",new ReferenceType(new IntType())),
+                new CompoundStatement(new VariableDeclarationStatement("v2",new ReferenceType(new IntType())),
+                        new CompoundStatement(new VariableDeclarationStatement("x",new IntType()),
+                                new CompoundStatement(new VariableDeclarationStatement("q",new IntType()),
+                                        new CompoundStatement(new HeapAllocation("v1",new ValueExpression(new IntValue(20))),
+                                                new CompoundStatement(new HeapAllocation("v2",new ValueExpression(new IntValue(30))),
+                                                        new CompoundStatement(new NewLock("x"),
+                                                                new CompoundStatement(
+                                                                        new ForkStatement(new CompoundStatement(new ForkStatement(new CompoundStatement(new Lock("x"),
+                                                                                new CompoundStatement(new WriteHeap("v1",new ArithmeticExpression("-",new ReadHeap(new VariableExpression("v1")),new ValueExpression(new IntValue(1)))),
+                                                                                        new Unlock("x")))),
+                                                                                new CompoundStatement(new Lock("x"),new CompoundStatement(new WriteHeap("v1",new ArithmeticExpression("*",new ReadHeap(new VariableExpression("v1")),new ValueExpression(new IntValue(10)))),
+                                                                                new Unlock("x"))))),
+                                                                        new CompoundStatement(new NewLock("q"),
+                                                                                new CompoundStatement(
+                                                                                        new ForkStatement(
+                                                                                                new CompoundStatement(new ForkStatement(new CompoundStatement(new Lock("q"),new CompoundStatement(new WriteHeap("v2",new ArithmeticExpression("+",new ReadHeap(new VariableExpression("v2")),new ValueExpression(new IntValue(5)))),
+                                                                                                        new Unlock("q")))),
+                                                                                                        new CompoundStatement(new Lock("q"),
+                                                                                                                new CompoundStatement(new WriteHeap("v2", new ArithmeticExpression("*",new ReadHeap(new VariableExpression("v2")),new ValueExpression(new IntValue(10)))),
+                                                                                                                        new Unlock("q"))))),
+                                                                                        new CompoundStatement(new NoOperationStatement(true),
+                                                                                                new CompoundStatement(new NoOperationStatement(true),
+                                                                                                        new CompoundStatement(new NoOperationStatement(true),
+                                                                                                                new CompoundStatement(new NoOperationStatement(true),
+                                                                                                                        new CompoundStatement(new Lock("x"),
+                                                                                                                                new CompoundStatement(new PrintStatement(new ReadHeap(new VariableExpression("v1"))),
+                                                                                                                                        new CompoundStatement(new Unlock("x"),
+                                                                                                                                                new CompoundStatement(new Lock("q"),
+                                                                                                                                                        new CompoundStatement(new PrintStatement(new ReadHeap(new VariableExpression("v2"))), new Unlock("q"))))))))))))))))))));
+
+        ProgramState program14 = new ProgramState(example14);
+        RepositoryInterface repo14 = new Repository(program14, "log14.txt");
+        Controller controller14 = new Controller(repo14);
         menu.addCommand(new RunExample(1, example1.getText(), controller1));
         menu.addCommand(new RunExample(2, example2.getText(), controller2));
         menu.addCommand(new RunExample(3, example3.getText(), controller3));
@@ -257,6 +316,8 @@ public class Interpreter extends Application {
         menu.addCommand(new RunExample(10, example10.getText(), controller10));
         menu.addCommand(new RunExample(11, example11.getText(), controller11));
         menu.addCommand(new RunExample(12, example12.getText(), controller12));
+        menu.addCommand(new RunExample(13, example13.getText(), controller13));
+        menu.addCommand(new RunExample(14, example14.getText(), controller14));
         //menu.show();
     }
 
